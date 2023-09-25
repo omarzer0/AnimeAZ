@@ -1,0 +1,20 @@
+package az.zero.animeaz
+
+import com.arkivanov.essenty.parcelable.Parcelable
+import com.arkivanov.essenty.parcelable.Parcelize
+
+/**
+ * *** Important setup steps Router library didn't mention ***
+ *
+ * 1- You have to add dependencies to the android gradle
+ * 2- You have to add id("kotlin-parcelize") to common main plugins
+ * 3- add @Parcelize annotation and implement Parcelable in the class you wanna pass to screens
+ * */
+
+@Parcelize
+sealed class ScreenDestination : Parcelable {
+
+    object HomeScreenDestination : ScreenDestination()
+
+
+}
