@@ -48,9 +48,15 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
+                allWarningsAsErrors = false
+                // To ignore ExperimentalMaterial3Api error
+                freeCompilerArgs += listOf(
+                    "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+                )
             }
         }
     }
+
 
     targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
         binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
@@ -164,11 +170,11 @@ dependencies {
 //        packageName = "$nameSpace.database"
 //    }
 //}
-//
-//multiplatformResources {
-//    multiplatformResourcesPackage = nameSpace
-//    multiplatformResourcesClassName = "SharedRes"
-//}
+
+multiplatformResources {
+    multiplatformResourcesPackage = nameSpace
+    multiplatformResourcesClassName = "SharedRes"
+}
 
 tasks.withType<KotlinNativeLink>()
     .matching { linkTask -> linkTask.binary is AbstractExecutable }

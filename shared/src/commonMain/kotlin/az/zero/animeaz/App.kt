@@ -3,6 +3,7 @@ package az.zero.animeaz
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import az.zero.animeaz.presentation.screens.home.HomeScreen
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.predictiveBackAnimation
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
@@ -35,7 +36,7 @@ fun App(
                 ),
             ) { screen ->
                 when (screen) {
-                    ScreenDestination.HomeScreenDestination -> {}
+                    ScreenDestination.HomeScreenDestination -> HomeScreen()
                 }
             }
         }
