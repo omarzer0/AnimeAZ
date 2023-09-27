@@ -117,6 +117,9 @@ kotlin {
                 // Kotlin date-time
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 
+                // My Paging library
+                implementation(project(":paging"))
+
             }
         }
 

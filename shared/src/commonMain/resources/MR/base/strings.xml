@@ -8,10 +8,18 @@
     <string name="search">Search</string>
 
     <string name="error">Error</string>
+    <string name="error_with_placeholder">Error %s</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="network_error">Please check your internet connection</string>
+
+    <string name="home_load_more_error">Unable to load data, Please try again</string>
+    <string name="retry_btn_text">Try again</string>
+
     <string name="animeImage">Anime image</string>
     <string name="ratingStar">Rating star</string>
 
     <string name="onAir">On-Air</string>
     <string name="finished">Finished</string>
+
 
 </resources>

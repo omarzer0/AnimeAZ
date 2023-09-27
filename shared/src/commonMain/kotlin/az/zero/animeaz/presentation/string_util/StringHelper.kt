@@ -1,4 +1,4 @@
-package az.zero.animeaz.presentation.stringUtil
+package az.zero.animeaz.presentation.string_util
 
 import dev.icerock.moko.resources.StringResource
 import org.koin.core.component.KoinComponent

@@ -1,70 +1,72 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package az.zero.animeaz.presentation.screens.home
+package az.zero.animeaz.presentation.screens.search
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
 import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.presentation.shared.AnimeItem
+import az.zero.animeaz.presentation.shared.AppDivider
+import az.zero.animeaz.presentation.shared.BasicHeaderWithBackBtn
 import az.zero.animeaz.presentation.shared.ErrorWithRetry
 import az.zero.animeaz.presentation.shared.LoadingComposable
 import az.zero.animeaz.presentation.shared.PagingListener
+import az.zero.animeaz.presentation.shared.TextWithClearIcon
 import az.zero.animeaz.presentation.shared.getSpan
 import az.zero.animeaz.presentation.string_util.StringHelper
 import io.github.xxfast.decompose.router.rememberOnRoute
 
 @Composable
-fun HomeScreen(
-    onAnimeClick: (Anime) -> Unit,
-    onSearchClick: () -> Unit,
+fun SearchScreen(
+    onBackPressed: () -> Unit,
+    onAnimeClick: (Anime) -> Unit
 ) {
 
+    val viewModel = rememberOnRoute(instanceClass = SearchViewModel::class) { SearchViewModel(it) }
+    val query by viewModel.searchQuery.collectAsState()
+
     val spanCount = 3
-    val viewModel = rememberOnRoute(instanceClass = HomeViewModel::class) { HomeViewModel(it) }
-    val homeScreenState by viewModel.animeListState.collectAsState()
-    val animeList = homeScreenState.animeList
+    val searchScreenState by viewModel.searchScreenState.collectAsState()
+    val animeList = searchScreenState.animeList
 
     val listState = rememberLazyGridState()
     PagingListener(listState = listState) { viewModel.loadMore() }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            HomeTopAppBar(
-                onDrawerClick = {},
-                onSearchClick = onSearchClick
+            SearchHeader(
+                text = query,
+                onTextValueChanged = { viewModel.updateSearchQuery(it) },
+                onBackPressed = onBackPressed,
+                onClearClick = { viewModel.updateSearchQuery("") }
             )
+
         }
     ) {
         when {
-            homeScreenState.initialLoadingError != null -> {
+            searchScreenState.initialLoadingError != null -> {
                 Box(
                     modifier = Modifier.fillMaxSize().padding(16.dp),
                     contentAlignment = Alignment.Center
@@ -75,7 +77,7 @@ fun HomeScreen(
                 }
             }
 
-            homeScreenState.isInitialLoading -> {
+            searchScreenState.isInitialLoading -> {
                 LoadingComposable(color = Color.Red)
             }
 
@@ -87,9 +89,11 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(2.dp),
                     state = listState
                 ) {
-                    items(animeList) { anime -> AnimeItem(anime = anime, onClick = onAnimeClick) }
+                    items(animeList) { anime ->
+                        AnimeItem(anime = anime, onClick = onAnimeClick)
+                    }
 
-                    if (homeScreenState.isLoadingMore) {
+                    if (searchScreenState.isLoadingMore) {
                         item(span = getSpan(spanCount)) {
                             LoadingComposable(
                                 modifier = Modifier.fillMaxWidth().height(200.dp),
@@ -98,7 +102,7 @@ fun HomeScreen(
                         }
                     }
 
-                    homeScreenState.loadingMoreError?.let {
+                    searchScreenState.loadingMoreError?.let {
                         item(span = getSpan(spanCount)) {
                             ErrorWithRetry(
                                 errorBodyText = StringHelper.getStringRes(
@@ -119,54 +123,29 @@ fun HomeScreen(
         }
 
     }
-
 }
-
-
-
 
 @Composable
-fun HomeTopAppBar(
-    modifier: Modifier = Modifier,
-    onDrawerClick: () -> Unit,
-    onSearchClick: () -> Unit
+fun SearchHeader(
+    text: String,
+    onTextValueChanged: (String) -> Unit,
+    onBackPressed: () -> Unit,
+    onClearClick: () -> Unit,
 ) {
+    Column {
+        BasicHeaderWithBackBtn(
+            onBackPressed = onBackPressed,
+            textContent = {
+                TextWithClearIcon(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background),
+                    text = text,
+                    hint = StringHelper.getStringRes(SharedRes.strings.search),
+                    onClearClick = onClearClick,
+                    onTextValueChanged = onTextValueChanged
+                )
+            }
+        )
 
-    // TODO 1: Use Large appbar with scrolling behavior
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Text(
-                text = StringHelper.getStringRes(SharedRes.strings.appName),
-                fontWeight = FontWeight.Bold,
-            )
-        },
-        navigationIcon = {
-            IconButton(
-                onClick = onDrawerClick,
-                content = {
-                    Icon(
-                        modifier = Modifier.size(28.dp),
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.drawer),
-                    )
-                }
-            )
-        },
-        actions = {
-            IconButton(
-                onClick = onSearchClick,
-                content = {
-                    Icon(
-                        modifier = Modifier.size(28.dp),
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.search),
-                    )
-                }
-            )
-        }
-    )
-
+        AppDivider()
+    }
 }
-
-

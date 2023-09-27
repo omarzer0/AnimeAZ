@@ -9,4 +9,12 @@ interface AnimeRemoteService {
         limit: Int,
         filterAdultContent: Boolean
     ): TopAnimeResponseDto
+
+    suspend fun searchAnime(
+        page: Int,
+        limit: Int,
+        filterAdultContent: Boolean,
+        query: String
+    ): TopAnimeResponseDto
+
 }

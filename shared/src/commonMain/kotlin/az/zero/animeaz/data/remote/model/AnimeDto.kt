@@ -1,6 +1,7 @@
 package az.zero.animeaz.data.remote.model
 
 
+import az.zero.animeaz.domain.model.Anime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -33,7 +34,7 @@ data class AnimeDto(
     @SerialName("licensors")
     val licensors: List<LicensorDto?>?,
     @SerialName("mal_id")
-    val malId: Int?,
+    val id: Long?,
     @SerialName("members")
     val members: Int?,
     @SerialName("popularity")
@@ -79,3 +80,17 @@ data class AnimeDto(
     @SerialName("year")
     val year: Int?
 )
+
+fun AnimeDto?.toAnime(): Anime {
+    return Anime(
+        id = this?.id ?: -1,
+        englishName = this?.titleEnglish ?: "",
+        image = this?.images?.jpg?.imageUrl ?: "",
+        score = this?.score?.toFloat() ?: 0.0f,
+        airingStatus = this?.airing ?: false
+    )
+}
+
+fun List<AnimeDto?>?.toAnimeList(): List<Anime> {
+    return this?.map { it.toAnime() } ?: emptyList()
+}
