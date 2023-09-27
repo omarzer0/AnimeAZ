@@ -1,4 +1,4 @@
-package az.zero.animeaz.util
+package az.zero.animeaz.presentation.stringUtil
 
 import dev.icerock.moko.resources.StringResource
 

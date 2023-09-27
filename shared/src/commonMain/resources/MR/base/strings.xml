@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources>
+
+    <string name="appName">AnimeAZ</string>
+
+    <string name="drawer">Drawer</string>
+    <string name="search">Search</string>
+
+    <string name="error">Error</string>
+    <string name="animeImage">Anime image</string>
+    <string name="ratingStar">Rating star</string>
+
+    <string name="onAir">On-Air</string>
+    <string name="finished">Finished</string>
+
+</resources>
