@@ -1,5 +1,6 @@
 package az.zero.animeaz
 
+import az.zero.animeaz.domain.model.Anime
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 
@@ -16,6 +17,7 @@ sealed class ScreenDestination : Parcelable {
 
     object HomeScreenDestination : ScreenDestination()
     object SearchScreenDestination : ScreenDestination()
+    data class DetailsScreenDestination(val anime: Anime) : ScreenDestination()
 
 
 }

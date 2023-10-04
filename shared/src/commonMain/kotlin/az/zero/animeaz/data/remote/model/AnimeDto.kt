@@ -86,6 +86,7 @@ fun AnimeDto?.toAnime(): Anime {
         id = this?.id ?: -1,
         englishName = this?.title ?: "",
         image = this?.images?.jpg?.imageUrl ?: "",
+        cover = this?.images?.jpg?.largeImageUrl ?: "",
         score = this?.score?.toFloat() ?: 0.0f,
         airingStatus = this?.airing ?: false
     )

@@ -3,7 +3,9 @@ package az.zero.animeaz
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import az.zero.animeaz.ScreenDestination.DetailsScreenDestination
 import az.zero.animeaz.ScreenDestination.SearchScreenDestination
+import az.zero.animeaz.presentation.screens.details.DetailsScreen
 import az.zero.animeaz.presentation.screens.home.HomeScreen
 import az.zero.animeaz.presentation.screens.search.SearchScreen
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
@@ -40,14 +42,20 @@ fun App(
             ) { screen ->
                 when (screen) {
                     ScreenDestination.HomeScreenDestination -> HomeScreen(
-                        onAnimeClick = {},
+                        onAnimeClick = {
+                            router.push(DetailsScreenDestination(it))
+                        },
                         onSearchClick = { router.push(SearchScreenDestination) }
                     )
 
                     SearchScreenDestination -> SearchScreen(
-                        onAnimeClick = {},
+                        onAnimeClick = {
+                            router.push(DetailsScreenDestination(it))
+                        },
                         onBackPressed = { router.pop() }
                     )
+
+                    is DetailsScreenDestination -> DetailsScreen(screen.anime)
                 }
             }
         }
