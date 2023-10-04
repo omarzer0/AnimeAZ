@@ -84,7 +84,7 @@ data class AnimeDto(
 fun AnimeDto?.toAnime(): Anime {
     return Anime(
         id = this?.id ?: -1,
-        englishName = this?.titleEnglish ?: "",
+        englishName = this?.title ?: "",
         image = this?.images?.jpg?.imageUrl ?: "",
         score = this?.score?.toFloat() ?: 0.0f,
         airingStatus = this?.airing ?: false

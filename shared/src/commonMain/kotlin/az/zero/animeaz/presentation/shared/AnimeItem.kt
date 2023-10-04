@@ -60,9 +60,8 @@ fun AnimeItem(
             modifier = Modifier.fillMaxWidth(),
             text = anime.englishName,
             style = MaterialTheme.typography.titleSmall,
-            textAlign = TextAlign.Center,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(8.dp))

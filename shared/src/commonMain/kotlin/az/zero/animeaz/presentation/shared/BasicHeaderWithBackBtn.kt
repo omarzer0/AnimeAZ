@@ -16,13 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
+import az.zero.animeaz.SharedRes
+import az.zero.animeaz.presentation.string_util.StringHelper
 
 @Composable
 fun BasicHeaderWithBackBtn(
     modifier: Modifier = Modifier,
     textContent: @Composable () -> Unit,
     onBackPressed: () -> Unit,
-    backgroundColor: Color = Color.Black,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     darkBackButton: Boolean = backgroundColor.luminance() > 0.5f,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
@@ -41,7 +43,7 @@ fun BasicHeaderWithBackBtn(
             ) {
                 Icon(
                     Icons.Filled.ArrowBack,
-                    "Back",
+                    StringHelper.getStringRes(SharedRes.strings.back),
                     tint = backButtonTint,
                 )
             }

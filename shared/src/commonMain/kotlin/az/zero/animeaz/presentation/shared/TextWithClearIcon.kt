@@ -42,7 +42,7 @@ fun TextWithClearIcon(
     cursorBrush: Color = Color.Red,
     cursorHandleColor: Color = Color.Red,
     cursorSelectedRegionColor: Color = Color.Red,
-    textColor: Color = Color.White,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
     onClearClick: () -> Unit,
 ) {
 
