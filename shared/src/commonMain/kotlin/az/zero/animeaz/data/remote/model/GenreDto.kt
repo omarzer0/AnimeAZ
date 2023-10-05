@@ -1,7 +1,6 @@
 package az.zero.animeaz.data.remote.model
 
 
-import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.domain.model.Genre
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -2,6 +2,8 @@ package az.zero.animeaz.domain.model
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Parcelize
 data class Anime(
@@ -14,9 +16,18 @@ data class Anime(
     val rank: Int,
     val popularity: Int,
     val airingStatus: Boolean,
-    val description:String,
-    val genres:List<Genre>
-) : Parcelable
+    val description: String,
+    val season: String,
+    val year: String,
+    val numberOfEpisodes: Int,
+    val showType: String,
+    val genres: List<Genre>,
+) : Parcelable {
+    val seasonWithYear get() = "${this.season} ${this.year}"
+
+    val typeOfShowWithNumberOfEpisodes get() = "${this.showType} | ${this.numberOfEpisodes} Episode${if (this.numberOfEpisodes > 1) "s" else ""}"
+
+}
 
 @Parcelize
 data class Genre(
@@ -24,4 +35,13 @@ data class Genre(
     val name: String,
     val type: String,
     val url: String
-): Parcelable
+) : Parcelable
+
+
+//@Parcelize
+//data class Broadcast(
+//    val day: String,
+//    val string: String,
+//    val time: String,
+//    val timezone: String?
+//):Parcelable

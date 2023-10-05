@@ -93,6 +93,10 @@ fun AnimeDto?.toAnime(): Anime {
         rank = this?.rank ?: 0,
         popularity = this?.popularity ?: 0,
         description = this?.synopsis ?: "",
+        season = this?.season ?: "",
+        year = this?.year?.toString() ?: "",
+        numberOfEpisodes = this?.episodes ?: 0,
+        showType = this?.type ?: "",
         genres = this?.genres.toGenreList()
     )
 }

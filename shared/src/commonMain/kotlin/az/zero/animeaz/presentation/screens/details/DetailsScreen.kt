@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -98,11 +99,13 @@ fun DetailsScreen(anime: Anime) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 140.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
+                        .height(200.dp)
+
                 ) {
                     Image(
                         modifier = Modifier
+                            .fillMaxHeight()
                             .width(140.dp)
-                            .height(200.dp)
                             .clip(RoundedCornerShape(8.dp)),
                         painter = image,
                         contentDescription = null,
@@ -111,7 +114,10 @@ fun DetailsScreen(anime: Anime) {
                     Spacer(modifier = Modifier.width(8.dp))
                     Column(
                         modifier = Modifier.weight(1f)
+                            .fillMaxHeight(),
+                        verticalArrangement = Arrangement.SpaceEvenly
                     ) {
+
                         Text(
                             text = anime.englishName,
                             style = MaterialTheme.typography.titleMedium,
@@ -119,11 +125,21 @@ fun DetailsScreen(anime: Anime) {
                             overflow = TextOverflow.Ellipsis,
                             fontWeight = FontWeight.ExtraBold
                         )
-
                         Text(
                             text = showStatus,
                             maxLines = 1,
                         )
+
+                        Text(
+                            text = anime.seasonWithYear,
+                            maxLines = 1,
+                        )
+
+                        Text(
+                            text = anime.typeOfShowWithNumberOfEpisodes,
+                            maxLines = 1,
+                        )
+
 
                     }
 
