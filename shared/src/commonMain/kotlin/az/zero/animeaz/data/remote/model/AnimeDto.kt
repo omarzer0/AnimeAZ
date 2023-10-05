@@ -88,10 +88,15 @@ fun AnimeDto?.toAnime(): Anime {
         image = this?.images?.jpg?.imageUrl ?: "",
         cover = this?.images?.jpg?.largeImageUrl ?: "",
         score = this?.score?.toFloat() ?: 0.0f,
-        airingStatus = this?.airing ?: false
+        airingStatus = this?.airing ?: false,
+        reviewCount = this?.scoredBy ?: 0,
+        rank = this?.rank ?: 0,
+        popularity = this?.popularity ?: 0,
+        description = this?.synopsis ?: "",
+        genres = this?.genres.toGenreList()
     )
 }
 
 fun List<AnimeDto?>?.toAnimeList(): List<Anime> {
-    return this?.map { it.toAnime() } ?: emptyList()
+    return this?.filterNotNull()?.map { it.toAnime() } ?: emptyList()
 }
