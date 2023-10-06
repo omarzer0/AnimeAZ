@@ -1,8 +1,7 @@
-@file:OptIn(ExperimentalAnimationApi::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package az.zero.animeaz.presentation.screens.details
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,13 +24,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Tag
 import androidx.compose.material.icons.outlined.StarHalf
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,7 +64,10 @@ import az.zero.animeaz.presentation.theme.CustomColors
 import io.github.xxfast.decompose.router.rememberOnRoute
 
 @Composable
-fun DetailsScreen(anime: Anime) {
+fun DetailsScreen(
+    anime: Anime,
+    onBackClick: () -> Unit
+) {
     val viewModel = rememberOnRoute(instanceClass = DetailsViewModel::class) {
         DetailsViewModel(it)
     }
@@ -79,9 +87,21 @@ fun DetailsScreen(anime: Anime) {
     val showStatus =
         StringHelper.getStringRes(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
 
-    Surface(modifier = Modifier.fillMaxSize()) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            DetailsTopBar(
+                title = anime.englishName,
+                onBackClick = onBackClick,
+                onFavClick = {
+                    viewModel.onFavoriteClick(anime)
+                }
+            )
+        }
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState),
+            modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+                .background(MaterialTheme.colorScheme.primary),
             verticalArrangement = Arrangement.Top
         ) {
             Box {
@@ -98,7 +118,7 @@ fun DetailsScreen(anime: Anime) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 140.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
+                        .padding(top = 140.dp, start = 16.dp, end = 8.dp, bottom = 16.dp)
                         .height(200.dp)
 
                 ) {
@@ -113,8 +133,7 @@ fun DetailsScreen(anime: Anime) {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Column(
-                        modifier = Modifier.weight(1f)
-                            .fillMaxHeight(),
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
                         verticalArrangement = Arrangement.SpaceEvenly
                     ) {
 
@@ -151,6 +170,7 @@ fun DetailsScreen(anime: Anime) {
             Row(
                 modifier = Modifier.fillMaxWidth().padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 Column(
@@ -192,7 +212,7 @@ fun DetailsScreen(anime: Anime) {
                 modifier = Modifier.fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 12.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(Color.Magenta)
+                    .background(MaterialTheme.colorScheme.surface)
             ) {
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -217,11 +237,61 @@ fun DetailsScreen(anime: Anime) {
 }
 
 @Composable
+fun DetailsTopBar(
+    modifier: Modifier = Modifier,
+    title: String,
+    onBackClick: () -> Unit,
+    onFavClick: () -> Unit
+) {
+    TopAppBar(
+        modifier = modifier,
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+        title = {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = onBackClick,
+                content = {
+                    Icon(
+                        modifier = Modifier.size(28.dp),
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = StringHelper.getStringRes(SharedRes.strings.back),
+                    )
+                }
+            )
+        },
+        actions = {
+            IconButton(
+                onClick = onFavClick,
+                content = {
+                    Icon(
+                        modifier = Modifier.size(28.dp),
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                    )
+                }
+            )
+        }
+    )
+}
+
+@Composable
 fun CustomChipButton(
     text: String,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = MaterialTheme.typography.labelMedium,
-    backgroundColor: Color = MaterialTheme.colorScheme.onPrimary
+    backgroundColor: Color = MaterialTheme.colorScheme.primary
 ) {
 
     Box(
@@ -280,7 +350,7 @@ fun RowScope.DetailsIconHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(36.dp),
             imageVector = icon,
             contentDescription = contentDescription,
             tint = iconTint

@@ -81,6 +81,16 @@ fun SearchScreen(
                 LoadingComposable(color = Color.Red)
             }
 
+            animeList.isEmpty() -> {
+                Box(
+                    modifier = Modifier.fillMaxSize().padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = StringHelper.getStringRes(id = SharedRes.strings.no_result),
+                    )
+                }
+            }
             else -> {
                 LazyVerticalGrid(
                     modifier = Modifier.padding(it),

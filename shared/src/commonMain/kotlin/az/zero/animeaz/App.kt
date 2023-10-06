@@ -55,7 +55,9 @@ fun App(
                         onBackPressed = { router.pop() }
                     )
 
-                    is DetailsScreenDestination -> DetailsScreen(screen.anime)
+                    is DetailsScreenDestination -> DetailsScreen(screen.anime) {
+                        router.pop()
+                    }
                 }
             }
         }

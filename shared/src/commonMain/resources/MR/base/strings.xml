@@ -22,6 +22,10 @@
     <string name="finished">Finished</string>
 
     <string name="back">Back</string>
+    <string name="no_result">No Result</string>
+    <string name="favorite">Favorite</string>
+    <string name="lock_with_biometry">Lock using biometry</string>
+    <string name="loginHeaderPlaceHolder">Will be implemented soon!\nStay tuned :)</string>
 
 
 </resources>
