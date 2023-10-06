@@ -56,7 +56,6 @@ import az.zero.animeaz.presentation.shared.getSpan
 import az.zero.animeaz.presentation.string_util.StringHelper
 import io.github.xxfast.decompose.router.rememberOnRoute
 import kotlinx.coroutines.launch
-import kotlin.reflect.KProperty
 
 @Composable
 fun HomeScreen(
@@ -171,15 +170,14 @@ fun HomeModalSheetContent() {
         ) {
             Text(
                 text = StringHelper.getStringRes(SharedRes.strings.loginHeaderPlaceHolder),
-                style = MaterialTheme.typography.titleLarge.copy(
-                    color = Color.White
-                )
+                style = MaterialTheme.typography.titleLarge
             )
         }
 
         AppDivider()
 
         TextSwitch(
+            modifier = Modifier.padding(16.dp),
             name = StringHelper.getStringRes(SharedRes.strings.lock_with_biometry),
             change = true,
             onCheckedChange = {}
@@ -188,10 +186,18 @@ fun HomeModalSheetContent() {
 }
 
 @Composable
-private fun TextSwitch(name:String, change:Boolean, onCheckedChange: (Boolean) -> Unit) {
+private fun TextSwitch(
+    modifier: Modifier = Modifier,
+    name: String,
+    change: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
 
-    var isChecked by rememberSaveable{ mutableStateOf(false) }
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    var isChecked by rememberSaveable { mutableStateOf(false) }
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
 
         Switch(
             checked = isChecked,
