@@ -33,7 +33,7 @@ fun App(
         Surface(
             color = Color.Black
         ) {
-            val hasBioAuth = true
+            val hasBioAuth = false
             val initialRoute = if (hasBioAuth) AuthDestination else HomeScreenDestination
             val router = rememberRouter(ScreenDestination::class, listOf(initialRoute))
 

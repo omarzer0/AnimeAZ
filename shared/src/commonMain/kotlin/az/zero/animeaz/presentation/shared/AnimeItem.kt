@@ -58,7 +58,7 @@ fun AnimeItem(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = anime.englishName,
+            text = anime.name,
             style = MaterialTheme.typography.titleSmall,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

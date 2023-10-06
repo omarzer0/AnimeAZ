@@ -16,7 +16,6 @@ plugins {
 
     id("com.squareup.sqldelight")
     id("dev.icerock.mobile.multiplatform-resources")
-//    id("com.codingfeline.buildkonfig")
 }
 
 val nameSpace = "az.zero.animeaz"
@@ -120,6 +119,9 @@ kotlin {
                 // My Paging library
                 implementation(project(":paging"))
 
+                // KMP preferences
+                implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
+
             }
         }
 
@@ -130,7 +132,7 @@ kotlin {
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
 
-                implementation("io.github.xxfast:decompose-router-wear:0.3.0")
+//                implementation("io.github.xxfast:decompose-router-wear:0.3.0")
             }
         }
 
@@ -168,11 +170,11 @@ dependencies {
 
 }
 
-//sqldelight {
-//    database("AppDatabase") {
-//        packageName = "$nameSpace.database"
-//    }
-//}
+sqldelight {
+    database("AppDatabase") {
+        packageName = "$nameSpace.database"
+    }
+}
 
 multiplatformResources {
     multiplatformResourcesPackage = nameSpace

@@ -2,13 +2,11 @@ package az.zero.animeaz.domain.model
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 @Parcelize
 data class Anime(
     val id: Long,
-    val englishName: String,
+    val name: String,
     val image: String,
     val cover: String,
     val score: Float,

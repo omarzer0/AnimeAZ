@@ -1,0 +1,34 @@
+import az.zero.animeaz.domain.model.Genre;
+import kotlin.Boolean;
+import kotlin.Int;
+import kotlin.collections.List;
+
+CREATE TABLE IF NOT EXISTS animeEntity(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    image TEXT NOT NULL,
+    cover TEXT NOT NULL,
+    score REAL NOT NULL,
+    reviewCount INTEGER NOT NULL,
+    rank INTEGER NOT NULL,
+    popularity INTEGER NOT NULL,
+    airingStatus INTEGER AS Boolean CHECK (airingStatus IN (0, 1)) DEFAULT 0 NOT NULL,
+    description TEXT NOT NULL,
+    season TEXT NOT NULL,
+    year TEXT NOT NULL,
+    numberOfEpisodes INTEGER NOT NULL,
+    showType TEXT NOT NULL,
+    genres TEXT AS List<Genre> NOT NULL
+);
+
+
+getAllAnimes:
+SELECT * FROM animeEntity ORDER BY name ASC;
+
+insertAnime:
+INSERT OR REPLACE INTO animeEntity(id,name,image,cover,score,reviewCount,rank,popularity,airingStatus,description,season,year,numberOfEpisodes,showType,genres)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+
+
+deleteAnime:
+DELETE FROM animeEntity WHERE id =: id;

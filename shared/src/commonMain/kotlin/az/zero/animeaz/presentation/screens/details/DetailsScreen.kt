@@ -38,6 +38,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -74,6 +75,9 @@ fun DetailsScreen(
 
     val scrollState = rememberScrollState()
     val image = rememberDefaultPainter(url = anime.cover)
+
+    val testImage by viewModel.testImage.collectAsState()
+
     val rating = buildAnnotatedString {
         val score = anime.score.toString()
         append(score)
@@ -87,148 +91,157 @@ fun DetailsScreen(
     val showStatus =
         StringHelper.getStringRes(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            DetailsTopBar(
-                title = anime.englishName,
-                onBackClick = onBackClick,
-                onFavClick = {
-                    viewModel.onFavoriteClick(anime)
-                }
-            )
-        }
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
-                .background(MaterialTheme.colorScheme.primary),
-            verticalArrangement = Arrangement.Top
-        ) {
-            Box {
-
-                Image(
-                    modifier = Modifier.fillMaxWidth().height(250.dp),
-                    painter = image,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    alpha = 0.2f
+    if (testImage!= null){
+        Image(
+            modifier = Modifier.size(300.dp),
+            bitmap = testImage!!,
+            contentDescription = null
+        )
+    }else{
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                DetailsTopBar(
+                    title = anime.name,
+                    onBackClick = onBackClick,
+                    onFavClick = {
+                        viewModel.onFavoriteClick(anime)
+                    }
                 )
+            }
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+                    .background(MaterialTheme.colorScheme.primary),
+                verticalArrangement = Arrangement.Top
+            ) {
+                Box {
 
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 140.dp, start = 16.dp, end = 8.dp, bottom = 16.dp)
-                        .height(200.dp)
-
-                ) {
                     Image(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(140.dp)
-                            .clip(RoundedCornerShape(8.dp)),
+                        modifier = Modifier.fillMaxWidth().height(250.dp),
                         painter = image,
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds,
+                        alpha = 0.2f
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Column(
-                        modifier = Modifier.weight(1f).fillMaxHeight(),
-                        verticalArrangement = Arrangement.SpaceEvenly
+
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 140.dp, start = 16.dp, end = 8.dp, bottom = 16.dp)
+                            .height(200.dp)
+
                     ) {
-
-                        Text(
-                            text = anime.englishName,
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 3,
-                            overflow = TextOverflow.Ellipsis,
-                            fontWeight = FontWeight.ExtraBold
+                        Image(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .width(140.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            painter = image,
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
                         )
-                        Text(
-                            text = showStatus,
-                            maxLines = 1,
-                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column(
+                            modifier = Modifier.weight(1f).fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
 
-                        Text(
-                            text = anime.seasonWithYear,
-                            maxLines = 1,
-                        )
+                            Text(
+                                text = anime.name,
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 3,
+                                overflow = TextOverflow.Ellipsis,
+                                fontWeight = FontWeight.ExtraBold
+                            )
+                            Text(
+                                text = showStatus,
+                                maxLines = 1,
+                            )
 
-                        Text(
-                            text = anime.typeOfShowWithNumberOfEpisodes,
-                            maxLines = 1,
-                        )
+                            Text(
+                                text = anime.seasonWithYear,
+                                maxLines = 1,
+                            )
 
+                            Text(
+                                text = anime.typeOfShowWithNumberOfEpisodes,
+                                maxLines = 1,
+                            )
+
+
+                        }
 
                     }
 
+
                 }
 
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-            }
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(48.dp),
+                            imageVector = Icons.Outlined.StarHalf,
+                            contentDescription = null,
+                            tint = CustomColors.Orange
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(text = rating)
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = anime.reviewCount.toString(),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
 
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                    DetailsIconHeader(
+                        icon = Icons.Default.Tag,
+                        header = "Rank",
+                        body = anime.rank.toString(),
+                    )
+
+                    DetailsIconHeader(
+                        icon = Icons.Filled.Star,
+                        header = "Popularity",
+                        body = anime.popularity.toString(),
+                    )
+
+                }
+
 
                 Column(
-                    modifier = Modifier.weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surface)
                 ) {
-                    Icon(
-                        modifier = Modifier.size(48.dp),
-                        imageVector = Icons.Outlined.StarHalf,
-                        contentDescription = null,
-                        tint = CustomColors.Orange
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    Text(text = rating)
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = anime.reviewCount.toString(),
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                }
-
-                DetailsIconHeader(
-                    icon = Icons.Default.Tag,
-                    header = "Rank",
-                    body = anime.rank.toString(),
-                )
-
-                DetailsIconHeader(
-                    icon = Icons.Filled.Star,
-                    header = "Popularity",
-                    body = anime.popularity.toString(),
-                )
-
-            }
-
-
-            Column(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-            ) {
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    items(anime.genres, key = { it.id }) {
-                        CustomChipButton(it.name)
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        items(anime.genres, key = { it.id }) {
+                            CustomChipButton(it.name)
+                        }
                     }
-                }
-                anime.genres.isNotEmpty().apply {
-                    Spacer(Modifier.height(8.dp))
+                    anime.genres.isNotEmpty().apply {
+                        Spacer(Modifier.height(8.dp))
+                    }
+
+                    ExpandedText(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = anime.description,
+                    )
                 }
 
-                ExpandedText(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = anime.description,
-                )
             }
 
         }
