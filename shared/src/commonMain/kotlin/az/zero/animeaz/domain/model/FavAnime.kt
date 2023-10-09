@@ -6,14 +6,10 @@ data class FavAnime(
     val id: Long,
     val name: String,
     val image: ImageBitmap,
-    val score: Float,
-    val reviewCount: Long,
-    val rank: Long,
-    val popularity: Long,
     val airingStatus: Boolean,
-    val description: String,
-    val season: String,
-    val year: String,
     val numberOfEpisodes: Long,
-    val showType: String
-)
+    val showType: String,
+    val dateOfInsertion:Long
+){
+    val typeOfShowWithNumberOfEpisodes get() = "${this.showType} | ${this.numberOfEpisodes} Episode${if (this.numberOfEpisodes > 1) "s" else ""}"
+}

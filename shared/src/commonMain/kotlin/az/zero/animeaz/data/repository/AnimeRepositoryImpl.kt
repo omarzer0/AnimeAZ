@@ -52,21 +52,15 @@ class AnimeRepositoryImpl(
                 supervisorScope {
                     async {
                         val imageBitmap =
-                            imageStorageHandler.getImage(anime.cover) ?: return@async null
+                            imageStorageHandler.getImage(anime.image) ?: return@async null
                         FavAnime(
                             id = anime.id,
                             name = anime.name,
                             image = imageBitmap,
-                            score = anime.score,
-                            reviewCount = anime.reviewCount,
-                            rank = anime.rank,
-                            popularity = anime.popularity,
                             airingStatus = anime.airingStatus,
-                            description = anime.description,
-                            season = anime.season,
-                            year = anime.year,
                             numberOfEpisodes = anime.numberOfEpisodes,
-                            showType = anime.showType
+                            showType = anime.showType,
+                            dateOfInsertion = anime.dateOfInsertion
                         )
                     }
                 }

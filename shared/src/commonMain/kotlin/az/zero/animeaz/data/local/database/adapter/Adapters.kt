@@ -6,19 +6,20 @@ import database.AnimeEntity
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-val listOfGenreAdapter = object : ColumnAdapter<List<Genre>, String> {
-    override fun decode(databaseValue: String): List<Genre> {
-        return if (databaseValue.isEmpty()) {
-            listOf()
-        } else {
-//            databaseValue.split(",").map { Json.decodeFromString(it) }
-            Json.decodeFromString(databaseValue)
-        }
-    }
+// TODO this is how to store a custom object ... no need for it tho but we can reference it later
 
-    override fun encode(value: List<Genre>) = Json.encodeToString(value)
-
-
-}
-
-val animeEntityAdapter = AnimeEntity.Adapter(listOfGenreAdapter)
+//val listOfGenreAdapter = object : ColumnAdapter<List<Genre>, String> {
+//    override fun decode(databaseValue: String): List<Genre> {
+//        return if (databaseValue.isEmpty()) {
+//            listOf()
+//        } else {
+//            Json.decodeFromString(databaseValue)
+//        }
+//    }
+//
+//    override fun encode(value: List<Genre>) = Json.encodeToString(value)
+//
+//
+//}
+//
+//val animeEntityAdapter = AnimeEntity.Adapter(listOfGenreAdapter)

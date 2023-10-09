@@ -1,9 +1,13 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package az.zero.animeaz.presentation.screens.favorite
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,38 +18,56 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
 import az.zero.animeaz.domain.model.FavAnime
-import az.zero.animeaz.presentation.shared.clickableSafeClick
 import az.zero.animeaz.presentation.string_util.StringHelper
-import az.zero.animeaz.presentation.theme.CustomColors
 import io.github.xxfast.decompose.router.rememberOnRoute
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(
+    onBackClick: () -> Unit
+) {
     val viewModel =
         rememberOnRoute(instanceClass = FavoriteViewModel::class) { FavoriteViewModel() }
 
     val favAnimeList by viewModel.favAnimeList.collectAsState()
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-
-        LazyColumn {
-            items(favAnimeList) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            FavoriteTopBar(
+                title = StringHelper.getStringRes(SharedRes.strings.favorite),
+                onBackClick = onBackClick
+            )
+        }
+    ) {
+        LazyColumn(
+            modifier = Modifier.padding(it)
+        ) {
+            items(favAnimeList, key = { it.id }) {
                 FavAnimeItem(it) { viewModel.removeFromFavourite(it) }
             }
         }
@@ -60,70 +82,108 @@ fun FavAnimeItem(
     onRemoveFromFavClick: (FavAnime) -> Unit
 ) {
 
-    Column(
+    val showStatus =
+        StringHelper.getStringRes(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
+
+    Card(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
-            .clickableSafeClick(onLongClick = { onRemoveFromFavClick(anime) })
-            .padding(4.dp),
+            .fillMaxWidth()
+            .height(200.dp)
+            .padding(top = 8.dp, start = 16.dp, end = 8.dp, bottom = 16.dp)
+            .clip(RoundedCornerShape(8.dp)),
+
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
-        val animeShowState = StringHelper.getStringRes(
-            if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished
-        )
-
-        Image(
-            modifier = Modifier.fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(8.dp)),
-            bitmap = anime.image,
-            contentScale = ContentScale.Crop,
-            contentDescription = StringHelper.getStringRes(SharedRes.strings.animeImage)
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = anime.name,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-
-            Icon(
-                modifier = Modifier.size(14.dp),
-                imageVector = Icons.Filled.Star,
-                contentDescription = StringHelper.getStringRes(SharedRes.strings.ratingStar),
-                tint = CustomColors.DarkOrange
+        Row {
+            Image(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(140.dp),
+                bitmap = anime.image,
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
             )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column(
+                modifier = Modifier.weight(1f).fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
 
-            Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text = anime.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    fontWeight = FontWeight.ExtraBold
+                )
 
-            Text(
-                text = "${anime.score}",
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = showStatus,
+                        maxLines = 1,
+                    )
 
-            Spacer(modifier = Modifier.width(2.dp))
+                    IconButton(
+                        onClick = { onRemoveFromFavClick(anime) },
+                        content = {
+                            Icon(
+                                modifier = Modifier.size(28.dp),
+                                imageVector = Icons.Filled.Favorite,
+                                contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                                tint = Color.Red
+                            )
+                        }
+                    )
+                }
 
-            Text(
-                modifier = Modifier.weight(1f),
-                text = animeShowState,
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.End,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+                Text(
+                    text = anime.typeOfShowWithNumberOfEpisodes,
+                    maxLines = 1,
+                )
 
+            }
         }
-
     }
+}
 
+@Composable
+fun FavoriteTopBar(
+    modifier: Modifier = Modifier,
+    title: String,
+    onBackClick: () -> Unit,
+) {
+    TopAppBar(
+        modifier = modifier,
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+        title = {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = onBackClick,
+                content = {
+                    Icon(
+                        modifier = Modifier.size(28.dp),
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = StringHelper.getStringRes(SharedRes.strings.back),
+                    )
+                }
+            )
+        },
+    )
 }

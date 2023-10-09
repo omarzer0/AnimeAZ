@@ -2,7 +2,6 @@ package az.zero.animeaz
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import az.zero.animeaz.ScreenDestination.AuthDestination
 import az.zero.animeaz.ScreenDestination.DetailsScreenDestination
 import az.zero.animeaz.ScreenDestination.FavoriteScreenDestination
@@ -70,7 +69,9 @@ fun App(
                         router.replaceCurrent(HomeScreenDestination)
                     }
 
-                    FavoriteScreenDestination -> FavoriteScreen()
+                    FavoriteScreenDestination -> FavoriteScreen {
+                        router.pop()
+                    }
                 }
             }
         }

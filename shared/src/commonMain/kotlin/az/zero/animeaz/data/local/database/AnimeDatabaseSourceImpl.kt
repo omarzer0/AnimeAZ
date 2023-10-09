@@ -1,22 +1,24 @@
 package az.zero.animeaz.data.local.database
 
-import az.zero.animeaz.data.local.database.mapper.toAnime
 import az.zero.animeaz.database.AppDatabase
 import az.zero.animeaz.domain.database.AnimeDatabaseSource
 import az.zero.animeaz.domain.model.Anime
+import az.zero.animeaz.domain.util.DateTimeUtil
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import database.AnimeEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AnimeDatabaseSourceImpl(db: AppDatabase) : AnimeDatabaseSource {
+class AnimeDatabaseSourceImpl(
+    private val db: AppDatabase,
+    private val dateTimeUtil: DateTimeUtil
+) : AnimeDatabaseSource {
     private val queries = db.animeQueries
-    override fun getAllFavouriteAnimeList(): Flow<List<Anime>> {
+
+    override fun getAllFavouriteAnimeList(): Flow<List<AnimeEntity>> {
         return queries.getAllAnimes().asFlow()
             .mapToList()
-            .map {
-                it.map { it.toAnime() }
-            }
     }
 
     override suspend fun insertAnime(anime: Anime) {
@@ -24,18 +26,10 @@ class AnimeDatabaseSourceImpl(db: AppDatabase) : AnimeDatabaseSource {
             id = anime.id,
             name = anime.name,
             image = anime.image,
-            cover = anime.cover,
-            score = anime.score.toDouble(),
-            reviewCount = anime.reviewCount,
-            rank = anime.reviewCount,
-            popularity = anime.popularity,
             airingStatus = anime.airingStatus,
-            description = anime.description,
-            season = anime.season,
-            year = anime.year,
             numberOfEpisodes = anime.numberOfEpisodes,
             showType = anime.showType,
-            genres = anime.genres
+            dateOfInsertion = dateTimeUtil.now()
         )
     }
 
