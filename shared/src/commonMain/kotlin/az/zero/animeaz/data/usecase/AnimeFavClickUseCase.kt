@@ -7,13 +7,12 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.readBytes
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
-class AddAnimeToFavorite(
+class AnimeFavClickUseCase(
     private val globalScope: CoroutineScope,
     private val client: HttpClient,
     private val imageStorageHandler: ImageStorageHandler,
@@ -22,18 +21,28 @@ class AddAnimeToFavorite(
 
     operator fun invoke(anime: Anime) {
         globalScope.launch {
-            downloadImageFromString(anime.cover)
-                .filterNotNull()
-                .catch {}
-                .collectLatest {
-                    val imagePath = imageStorageHandler.saveImage(it)
-                    val localAnime = anime.copy(
-                        cover = imagePath,
-                        image = imagePath
-                    )
-                    animeRepository.saveAnimeAsFavourite(localAnime)
-                }
+            val isFav = animeRepository.isAnimeFavoriteById(anime.id).first()
+            if (isFav) removeAnimeFromFav(anime)
+            else addAnimeToFav(anime)
         }
+    }
+
+    private suspend fun addAnimeToFav(anime: Anime) {
+        val filePath = downloadImageFromString(anime.cover)
+            .filterNotNull()
+            .first()
+
+        val imagePath = imageStorageHandler.saveImage(filePath)
+        val localAnime = anime.copy(
+            cover = imagePath,
+            image = imagePath
+        )
+        animeRepository.saveAnimeAsFavourite(localAnime)
+
+    }
+
+    private suspend fun removeAnimeFromFav(anime: Anime) {
+        animeRepository.deleteAnime(anime.id)
     }
 
     private fun downloadImageFromString(link: String) = flow {

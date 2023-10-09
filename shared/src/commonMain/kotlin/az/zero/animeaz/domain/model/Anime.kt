@@ -2,6 +2,7 @@ package az.zero.animeaz.domain.model
 
 import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
 data class Anime(
@@ -10,14 +11,14 @@ data class Anime(
     val image: String,
     val cover: String,
     val score: Float,
-    val reviewCount: Int,
-    val rank: Int,
-    val popularity: Int,
+    val reviewCount: Long,
+    val rank: Long,
+    val popularity: Long,
     val airingStatus: Boolean,
     val description: String,
     val season: String,
     val year: String,
-    val numberOfEpisodes: Int,
+    val numberOfEpisodes: Long,
     val showType: String,
     val genres: List<Genre>,
 ) : Parcelable {
@@ -27,9 +28,10 @@ data class Anime(
 
 }
 
+@Serializable
 @Parcelize
 data class Genre(
-    val id: Int,
+    val id: Long,
     val name: String,
     val type: String,
     val url: String

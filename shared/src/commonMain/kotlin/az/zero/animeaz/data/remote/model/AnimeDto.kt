@@ -22,11 +22,11 @@ data class AnimeDto(
     @SerialName("duration")
     val duration: String?,
     @SerialName("episodes")
-    val episodes: Int?,
+    val episodes: Long?,
 //    @SerialName("explicit_genres")
 //    val explicitGenres: List<Any>?,
     @SerialName("favorites")
-    val favorites: Int?,
+    val favorites: Long?,
     @SerialName("genres")
     val genres: List<GenreDto?>?,
     @SerialName("images")
@@ -36,19 +36,19 @@ data class AnimeDto(
     @SerialName("mal_id")
     val id: Long?,
     @SerialName("members")
-    val members: Int?,
+    val members: Long?,
     @SerialName("popularity")
-    val popularity: Int?,
+    val popularity: Long?,
     @SerialName("producers")
     val producers: List<ProducerDto?>?,
     @SerialName("rank")
-    val rank: Int?,
+    val rank: Long?,
     @SerialName("rating")
     val rating: String?,
     @SerialName("score")
     val score: Double?,
     @SerialName("scored_by")
-    val scoredBy: Int?,
+    val scoredBy: Long?,
     @SerialName("season")
     val season: String?,
     @SerialName("source")
@@ -78,7 +78,7 @@ data class AnimeDto(
     @SerialName("url")
     val url: String?,
     @SerialName("year")
-    val year: Int?
+    val year: Long?
 )
 
 fun AnimeDto?.toAnime(): Anime {

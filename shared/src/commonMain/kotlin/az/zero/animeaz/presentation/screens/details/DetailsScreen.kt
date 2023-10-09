@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.StarHalf
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -70,13 +71,14 @@ fun DetailsScreen(
     onBackClick: () -> Unit
 ) {
     val viewModel = rememberOnRoute(instanceClass = DetailsViewModel::class) {
-        DetailsViewModel(it)
+        DetailsViewModel(it, anime)
     }
+
+    val isFav by viewModel.isFav.collectAsState()
 
     val scrollState = rememberScrollState()
     val image = rememberDefaultPainter(url = anime.cover)
 
-    val testImage by viewModel.testImage.collectAsState()
 
     val rating = buildAnnotatedString {
         val score = anime.score.toString()
@@ -91,23 +93,18 @@ fun DetailsScreen(
     val showStatus =
         StringHelper.getStringRes(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
 
-    if (testImage!= null){
-        Image(
-            modifier = Modifier.size(300.dp),
-            bitmap = testImage!!,
-            contentDescription = null
-        )
-    }else{
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                DetailsTopBar(
-                    title = anime.name,
-                    onBackClick = onBackClick,
-                    onFavClick = {
-                        viewModel.onFavoriteClick(anime)
-                    }
-                )
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            DetailsTopBar(
+                title = anime.name,
+                onBackClick = onBackClick,
+                isFav = isFav,
+                onFavClick = {
+                    viewModel.onFavoriteClick()
+                }
+            )
             }
         ) {
             Column(
@@ -246,15 +243,15 @@ fun DetailsScreen(
 
         }
 
-    }
 }
 
 @Composable
 fun DetailsTopBar(
     modifier: Modifier = Modifier,
     title: String,
+    isFav: Boolean,
     onBackClick: () -> Unit,
-    onFavClick: () -> Unit
+    onFavClick: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -290,8 +287,9 @@ fun DetailsTopBar(
                 content = {
                     Icon(
                         modifier = Modifier.size(28.dp),
-                        imageVector = Icons.Filled.Favorite,
+                        imageVector = if (isFav) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                        tint = if (isFav) Color.Red else MaterialTheme.colorScheme.onPrimary
                     )
                 }
             )

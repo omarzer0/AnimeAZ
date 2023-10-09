@@ -9,9 +9,9 @@ interface AnimeRepository {
     suspend fun searchForAnime(query: String, page: Int): List<Anime>
 
     suspend fun saveAnimeAsFavourite(anime: Anime)
-
-    suspend fun deleteAnime(id: Int)
-    suspend fun getAllFavouriteAnimeList(): Flow<List<Anime>>
+    fun isAnimeFavoriteById(id: Long): Flow<Boolean>
+    suspend fun deleteAnime(id: Long)
+    fun getAllFavouriteAnimeList(): Flow<List<Anime>>
 }
 
 

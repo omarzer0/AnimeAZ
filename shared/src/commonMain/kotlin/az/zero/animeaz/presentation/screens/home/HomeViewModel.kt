@@ -19,9 +19,11 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     private val animeRepository: AnimeRepository by inject()
+
     private val _useBioAuth = MutableStateFlow(Preferences.getBioAuthLock())
     // FIXME: updating this blocks the UI until it saves the data and retrieve it back ... Do async update and loading in the Drawer UI
     val useBioAuth = _useBioAuth.asStateFlow()
+
     private val pagination: Pager<Anime, Int> = Pager(
         comparator = { oldItem, newItem -> oldItem.id == newItem.id },
         initialList = emptyList(),

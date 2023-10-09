@@ -42,7 +42,7 @@ fun Modifier.clickableSafeClick(
     role: Role? = null,
     onLongClick: (() -> Unit)? = null,
     onDoubleClick: (() -> Unit)? = null,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) = composed(
     inspectorInfo = debugInspectorInfo {
         name = "clickable"
@@ -58,7 +58,7 @@ fun Modifier.clickableSafeClick(
 
     Modifier.combinedClickable(
         enabled = enabled,
-        onClick = { onClickEventsCutter.processEvent { onClick() } },
+        onClick = { onClickEventsCutter.processEvent { onClick?.invoke() } },
         onLongClick = onLongClick,
         onDoubleClick = onDoubleClick,
         onLongClickLabel = onLongClickLabel,

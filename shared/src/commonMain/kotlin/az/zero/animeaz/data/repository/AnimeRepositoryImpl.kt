@@ -15,6 +15,8 @@ class AnimeRepositoryImpl(
     private val animeDatabaseSource: AnimeDatabaseSource
 ) : AnimeRepository {
     override suspend fun getTopAnimeList(page: Int): List<Anime> {
+        println("Custom getTopAnimeList")
+
         return animeRemoteService.getTopAnimeList(page, LIMIT, FILTER_ADULT_CONTENT)
             .animeList
             .toAnimeList()
@@ -32,11 +34,15 @@ class AnimeRepositoryImpl(
         animeDatabaseSource.insertAnime(anime)
     }
 
-    override suspend fun deleteAnime(id: Int) {
+    override  fun isAnimeFavoriteById(id: Long): Flow<Boolean> {
+        return animeDatabaseSource.isAnimeFavoriteById(id)
+    }
+
+    override suspend fun deleteAnime(id: Long) {
         animeDatabaseSource.deleteAnime(id)
     }
 
-    override suspend fun getAllFavouriteAnimeList(): Flow<List<Anime>> {
+    override fun getAllFavouriteAnimeList(): Flow<List<Anime>> {
         return animeDatabaseSource.getAllFavouriteAnimeList()
     }
 

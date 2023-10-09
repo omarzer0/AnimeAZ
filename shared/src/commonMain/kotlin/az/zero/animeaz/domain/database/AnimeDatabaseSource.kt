@@ -8,6 +8,7 @@ interface AnimeDatabaseSource {
     fun getAllFavouriteAnimeList(): Flow<List<Anime>>
 
     suspend fun insertAnime(anime: Anime)
+     fun isAnimeFavoriteById(id: Long):Flow<Boolean>
 
-    suspend fun deleteAnime(id: Int)
+    suspend fun deleteAnime(id: Long)
 }

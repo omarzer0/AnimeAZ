@@ -20,29 +20,35 @@ class AnimeDatabaseSourceImpl(db: AppDatabase) : AnimeDatabaseSource {
     }
 
     override suspend fun insertAnime(anime: Anime) {
-        // FIXME: the sql delight plugin should return int when the type is INT or INTEGER but instead it returns Long
         queries.insertAnime(
             id = anime.id,
             name = anime.name,
             image = anime.image,
             cover = anime.cover,
             score = anime.score.toDouble(),
-            reviewCount = anime.reviewCount.toLong(),
-            rank = anime.reviewCount.toLong(),
-            popularity = anime.popularity.toLong(),
+            reviewCount = anime.reviewCount,
+            rank = anime.reviewCount,
+            popularity = anime.popularity,
             airingStatus = anime.airingStatus,
             description = anime.description,
             season = anime.season,
             year = anime.year,
-            numberOfEpisodes = anime.numberOfEpisodes.toLong(),
+            numberOfEpisodes = anime.numberOfEpisodes,
             showType = anime.showType,
             genres = anime.genres
         )
     }
 
-    override suspend fun deleteAnime(id: Int) {
-        // FIXME:  the sql delight plugin .... 🙄🙄🙄🙄🙄🙄🙄🙄 I will not change the Anime id to long 🙄🙄
-        queries.deleteAnime(id.toLong())
+    override fun isAnimeFavoriteById(id: Long): Flow<Boolean> {
+        return queries.isAnimeFavoriteById(id).asFlow()
+            .map {
+                val exist = it.executeAsOneOrNull()
+                exist != null && exist > 0
+            }
+    }
+
+    override suspend fun deleteAnime(id: Long) {
+        queries.deleteAnime(id)
     }
 
 }

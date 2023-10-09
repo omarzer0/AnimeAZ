@@ -13,6 +13,7 @@ class AnimeRemoteServiceImpl(
         limit: Int,
         filterAdultContent: Boolean
     ): TopAnimeResponseDto {
+        println("Custom getTopAnimeList")
         return client.get("top/anime") {
             url {
                 parameters.append("page", page.toString())

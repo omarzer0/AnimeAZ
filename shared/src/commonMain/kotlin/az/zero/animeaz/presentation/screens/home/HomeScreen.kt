@@ -20,6 +20,8 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -58,6 +60,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     onAnimeClick: (Anime) -> Unit,
     onSearchClick: () -> Unit,
+    onFavListClick: () -> Unit,
 ) {
 
     val spanCount = 3
@@ -92,7 +95,8 @@ fun HomeScreen(
                             }
                         }
                     },
-                    onSearchClick = onSearchClick
+                    onSearchClick = onSearchClick,
+                    onFavListClick = onFavListClick
                 )
             }
         ) {
@@ -225,7 +229,8 @@ private fun TextSwitch(
 fun HomeTopAppBar(
     modifier: Modifier = Modifier,
     onDrawerClick: () -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    onFavListClick: () -> Unit
 ) {
 
     // TODO 1: Use Large appbar with scrolling behavior
@@ -256,6 +261,17 @@ fun HomeTopAppBar(
             )
         },
         actions = {
+            IconButton(
+                onClick = onFavListClick,
+                content = {
+                    Icon(
+                        modifier = Modifier.size(28.dp),
+                        imageVector = Icons.Outlined.FavoriteBorder,
+                        contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                    )
+                }
+            )
+
             IconButton(
                 onClick = onSearchClick,
                 content = {
