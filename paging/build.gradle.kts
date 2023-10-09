@@ -15,13 +15,6 @@ kotlin {
         }
     }
 
-    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
-        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
-            // export correct artifact to use all classes of library directly from Swift
-            export("dev.icerock.moko:mvvm-core:0.16.1")
-        }
-    }
-
     listOf(
         iosX64(),
         iosArm64(),
@@ -36,6 +29,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 //put your multiplatform dependencies here
+                val coroutinesVersion = "1.7.3"
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
             }
         }
@@ -61,17 +55,6 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
-}
-val coroutinesVersion = "1.7.3"
-
-dependencies {
-    // Coroutines
-    commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-livedata:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-state:0.16.1")
-    commonTestImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.22")
-    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
 }
 
 android {

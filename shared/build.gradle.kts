@@ -160,12 +160,12 @@ dependencies {
 
     commonMainApi("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
 
-    commonMainApi("dev.icerock.moko:permissions-compose:0.16.0") // permissions api + compose extensions
+//    commonMainApi("dev.icerock.moko:permissions-compose:0.16.0") // permissions api + compose extensions
 
-    commonMainApi("dev.icerock.moko:media:0.11.0")
-    commonMainApi("dev.icerock.moko:media-compose:0.11.0") // Compose Multiplatform
+//    commonMainApi("dev.icerock.moko:media:0.11.0")
+//    commonMainApi("dev.icerock.moko:media-compose:0.11.0") // Compose Multiplatform
 
-    commonMainApi("dev.icerock.moko:biometry:0.4.0")
+//    commonMainApi("dev.icerock.moko:biometry:0.4.0")
     commonMainApi("dev.icerock.moko:biometry-compose:0.4.0") // Compose Multiplatform
 
 }

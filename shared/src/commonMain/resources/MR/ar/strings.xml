@@ -1,0 +1,28 @@
+<resources>
+
+    <string name="appName">AnimeAZ</string>
+
+    <string name="drawer">شريط التنقل</string>
+    <string name="search">بحث</string>
+
+    <string name="error">خطأ</string>
+    <string name="error_with_placeholder">خطأ %s</string>
+    <string name="unknown_error">خطأ غير معروف</string>
+    <string name="network_error">يرجى التحقق من اتصالك بالإنترنت</string>
+
+    <string name="home_load_more_error">غير قادر على تحميل البيانات، يرجى المحاولة مرة أخرى</string>
+    <string name="retry_btn_text">حاول مرة أخرى</string>
+
+    <string name="animeImage">صورة الأنيمي</string>
+    <string name="ratingStar">نجمة التقييم</string>
+
+    <string name="onAir">يعرض حاليا</string>
+    <string name="finished">منتهي</string>
+
+    <string name="back">رجوع</string>
+    <string name="no_result">لا توجد نتائج</string>
+    <string name="favorite">مفضلة</string>
+    <string name="lock_with_biometry">قفل باستخدام المستشعرات البيومترية</string>
+    <string name="loginHeaderPlaceHolder">سيتم تنفيذه قريبًا!\nترقبوا ذلك :)</string>
+
+</resources>
