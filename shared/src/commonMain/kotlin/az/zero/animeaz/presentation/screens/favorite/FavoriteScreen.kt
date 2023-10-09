@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
+import az.zero.animeaz.domain.model.FavAnime
 import az.zero.animeaz.presentation.shared.clickableSafeClick
 import az.zero.animeaz.presentation.string_util.StringHelper
 import az.zero.animeaz.presentation.theme.CustomColors

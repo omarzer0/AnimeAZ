@@ -1,6 +1,7 @@
 package az.zero.animeaz.domain.repository
 
 import az.zero.animeaz.domain.model.Anime
+import az.zero.animeaz.domain.model.FavAnime
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {
@@ -11,7 +12,7 @@ interface AnimeRepository {
     suspend fun saveAnimeAsFavourite(anime: Anime)
     fun isAnimeFavoriteById(id: Long): Flow<Boolean>
     suspend fun deleteAnime(id: Long)
-    fun getAllFavouriteAnimeList(): Flow<List<Anime>>
+    fun getAllFavouriteAnimeList(): Flow<List<FavAnime>>
 }
 
 

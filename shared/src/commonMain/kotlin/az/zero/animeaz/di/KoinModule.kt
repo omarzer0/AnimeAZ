@@ -24,7 +24,7 @@ val sharedModule = module {
     single<HttpClient> { animeKtorHttpClient }
     single<AnimeEntity.Adapter> { animeEntityAdapter }
     single<AnimeRemoteService> { AnimeRemoteServiceImpl(get()) }
-    single<AnimeRepository> { AnimeRepositoryImpl(get(), get()) }
+    single<AnimeRepository> { AnimeRepositoryImpl(get(), get(), get()) }
     single<CoroutineScope>(named(GLOBAL_SCOPE)) { CoroutineScope(SupervisorJob()) }
     single<AnimeFavClickUseCase> { AnimeFavClickUseCase(get(named(GLOBAL_SCOPE)), get(), get(), get()) }
 }

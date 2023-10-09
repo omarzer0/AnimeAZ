@@ -33,11 +33,8 @@ fun App(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor
     ) {
-        Surface(
-            color = Color.Black
-        ) {
-//            val hasBioAuth = Preferences.getBioAuthLock()
-            val hasBioAuth = false
+        Surface {
+            val hasBioAuth = Preferences.getBioAuthLock()
             val initialRoute = if (hasBioAuth) AuthDestination else HomeScreenDestination
             val router = rememberRouter(ScreenDestination::class, listOf(initialRoute))
 
