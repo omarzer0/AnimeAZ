@@ -1,0 +1,36 @@
+<resources>
+
+    <string name="appName">AnimeAZ</string>
+
+    <string name="drawer">Schublade</string>
+    <string name="search">Suche</string>
+
+    <string name="error">Fehler</string>
+    <string name="error_with_placeholder">Fehler %s</string>
+    <string name="unknown_error">Unbekannter Fehler</string>
+    <string name="network_error">Bitte überprüfen Sie Ihre Internetverbindung</string>
+
+    <string name="home_load_more_error">Daten können nicht geladen werden. Bitte versuchen Sie es erneut</string>
+    <string name="retry_btn_text">Erneut versuchen</string>
+
+    <string name="animeImage">Anime-Bild</string>
+    <string name="ratingStar">Bewertungsstern</string>
+
+    <string name="onAir">Im Fernsehen</string>
+    <string name="finished">Abgeschlossen</string>
+
+    <string name="back">Zurück</string>
+    <string name="no_result">Kein Ergebnis</string>
+    <string name="favorite">Favorit</string>
+    <string name="lock_with_biometry">Sperren mit Biometrie</string>
+    <string name="loginHeaderPlaceHolder">Wird bald umgesetzt!\nBleiben Sie dran :)</string>
+
+    <string name="bio_request_title">Identifizieren Sie sich</string>
+    <string name="bio_request_reason">Verwenden Sie die biometrische Authentifizierung, um fortzufahren</string>
+    <string name="bio_failure_button_text">Nicht erkannt</string>
+
+    <string name="rank">Rang</string>
+    <string name="popularity">Beliebtheit</string>
+    <string name="clear">Löschen</string>
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources>
+
+    <string name="appName">AnimeAZ</string>
+
+    <string name="drawer">Drawer</string>
+    <string name="search">Search</string>
+
+    <string name="error">Error</string>
+    <string name="error_with_placeholder">Error %s</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="network_error">Please check your internet connection</string>
+
+    <string name="home_load_more_error">Unable to load data, Please try again</string>
+    <string name="retry_btn_text">Try again</string>
+
+    <string name="animeImage">Anime image</string>
+    <string name="ratingStar">Rating star</string>
+
+    <string name="onAir">On-Air</string>
+    <string name="finished">Finished</string>
+
+    <string name="back">Back</string>
+    <string name="no_result">No Result</string>
+    <string name="favorite">Favorite</string>
+    <string name="lock_with_biometry">Lock using biometry</string>
+    <string name="loginHeaderPlaceHolder">Will be implemented soon!\nStay tuned :)</string>
+
+    <string name="bio_request_title">Identify yourself</string>
+    <string name="bio_request_reason">Use Biometric auth to continue</string>
+    <string name="bio_failure_button_text">Unrecognised</string>
+
+    <string name="rank">Rank</string>
+    <string name="popularity">Popularity</string>
+    <string name="clear">Clear</string>
+
+</resources>

@@ -16,7 +16,6 @@ plugins {
 
     id("com.squareup.sqldelight")
     id("dev.icerock.mobile.multiplatform-resources")
-//    id("com.codingfeline.buildkonfig")
 }
 
 val nameSpace = "az.zero.animeaz"
@@ -48,9 +47,15 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
+                allWarningsAsErrors = false
+                // To ignore ExperimentalMaterial3Api error
+                freeCompilerArgs += listOf(
+                    "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+                )
             }
         }
     }
+
 
     targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
         binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
@@ -111,6 +116,12 @@ kotlin {
                 // Kotlin date-time
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 
+                // My Paging library
+                implementation(project(":paging"))
+
+                // KMP preferences
+                implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
+
             }
         }
 
@@ -121,7 +132,7 @@ kotlin {
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
 
-                implementation("io.github.xxfast:decompose-router-wear:0.3.0")
+//                implementation("io.github.xxfast:decompose-router-wear:0.3.0")
             }
         }
 
@@ -149,26 +160,26 @@ dependencies {
 
     commonMainApi("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
 
-    commonMainApi("dev.icerock.moko:permissions-compose:0.16.0") // permissions api + compose extensions
+//    commonMainApi("dev.icerock.moko:permissions-compose:0.16.0") // permissions api + compose extensions
 
-    commonMainApi("dev.icerock.moko:media:0.11.0")
-    commonMainApi("dev.icerock.moko:media-compose:0.11.0") // Compose Multiplatform
+//    commonMainApi("dev.icerock.moko:media:0.11.0")
+//    commonMainApi("dev.icerock.moko:media-compose:0.11.0") // Compose Multiplatform
 
-    commonMainApi("dev.icerock.moko:biometry:0.4.0")
+//    commonMainApi("dev.icerock.moko:biometry:0.4.0")
     commonMainApi("dev.icerock.moko:biometry-compose:0.4.0") // Compose Multiplatform
 
 }
 
-//sqldelight {
-//    database("AppDatabase") {
-//        packageName = "$nameSpace.database"
-//    }
-//}
-//
-//multiplatformResources {
-//    multiplatformResourcesPackage = nameSpace
-//    multiplatformResourcesClassName = "SharedRes"
-//}
+sqldelight {
+    database("AppDatabase") {
+        packageName = "$nameSpace.database"
+    }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = nameSpace
+    multiplatformResourcesClassName = "SharedRes"
+}
 
 tasks.withType<KotlinNativeLink>()
     .matching { linkTask -> linkTask.binary is AbstractExecutable }

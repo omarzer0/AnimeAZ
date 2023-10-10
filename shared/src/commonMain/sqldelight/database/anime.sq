@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS animeEntity(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    image TEXT NOT NULL,
+    airingStatus INTEGER AS Boolean CHECK (airingStatus IN (0, 1)) DEFAULT 0 NOT NULL,
+    numberOfEpisodes INTEGER NOT NULL,
+    showType TEXT NOT NULL,
+    dateOfInsertion INTEGER NOT NULL
+);
+
+
+getAllAnimes:
+SELECT * FROM animeEntity ORDER BY dateOfInsertion ASC;
+
+isAnimeFavoriteById:
+SELECT COUNT(*) FROM animeEntity WHERE id = ?;
+
+insertAnime:
+INSERT OR REPLACE INTO animeEntity(id,name,image,airingStatus,numberOfEpisodes,showType,dateOfInsertion)
+VALUES (?,?,?,?,?,?,?);
+
+
+deleteAnime:
+DELETE FROM animeEntity WHERE id =: id;

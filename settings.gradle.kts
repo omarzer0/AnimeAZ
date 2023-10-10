@@ -38,3 +38,4 @@ dependencyResolutionManagement {
 rootProject.name = "AnimeAZ"
 include(":androidApp")
 include(":shared")
+include(":paging")
