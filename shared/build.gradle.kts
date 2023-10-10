@@ -1,12 +1,3 @@
-import org.jetbrains.compose.desktop.application.tasks.AbstractNativeMacApplicationPackageAppDirTask
-import org.jetbrains.kotlin.gradle.plugin.mpp.AbstractExecutable
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.jetbrains.kotlin.library.impl.KotlinLibraryLayoutImpl
-import java.io.File
-import java.io.FileFilter
-import org.jetbrains.kotlin.konan.file.File as KonanFile
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -53,14 +44,6 @@ kotlin {
                     "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
                 )
             }
-        }
-    }
-
-
-    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
-        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
-            // export correct artifact to use all classes of library directly from Swift
-            export("dev.icerock.moko:mvvm-core:0.16.1")
         }
     }
 
@@ -131,14 +114,35 @@ kotlin {
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
-
-//                implementation("io.github.xxfast:decompose-router-wear:0.3.0")
             }
+        }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+
+        val androidUnitTest by getting
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+
+        val iosX64Test by getting
+        val iosArm64Test by getting
+        val iosSimulatorArm64Test by getting
+        val iosTest by getting {
+            dependsOn(commonTest)
+            iosX64Test.dependsOn(this)
+            iosArm64Test.dependsOn(this)
+            iosSimulatorArm64Test.dependsOn(this)
         }
 
         val iosMain by getting {
             dependsOn(commonMain)
-
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
                 implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
@@ -149,25 +153,10 @@ kotlin {
 }
 
 dependencies {
-    implementation("androidx.core:core:1.10.1")
-    implementation("androidx.annotation:annotation-jvm:1.6.0")
-    commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
-
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
-
-    commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
-
-    commonMainApi("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
-
-//    commonMainApi("dev.icerock.moko:permissions-compose:0.16.0") // permissions api + compose extensions
-
-//    commonMainApi("dev.icerock.moko:media:0.11.0")
-//    commonMainApi("dev.icerock.moko:media-compose:0.11.0") // Compose Multiplatform
-
-//    commonMainApi("dev.icerock.moko:biometry:0.4.0")
-    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0") // Compose Multiplatform
-
+    commonMainApi("dev.icerock.moko:resources-compose:0.23.0")
+    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0")
 }
 
 sqldelight {
@@ -179,65 +168,5 @@ sqldelight {
 multiplatformResources {
     multiplatformResourcesPackage = nameSpace
     multiplatformResourcesClassName = "SharedRes"
-}
-
-tasks.withType<KotlinNativeLink>()
-    .matching { linkTask -> linkTask.binary is AbstractExecutable }
-    .configureEach {
-        val task: KotlinNativeLink = this
-
-        doLast {
-            val binary: NativeBinary = task.binary
-            val outputDir: File = task.outputFile.get().parentFile
-            task.libraries
-                .filter { library -> library.extension == "klib" }
-                .filter(File::exists)
-                .forEach { inputFile ->
-                    val klibKonan = KonanFile(inputFile.path)
-                    val klib = KotlinLibraryLayoutImpl(
-                        klib = klibKonan,
-                        component = "default"
-                    )
-                    val layout = klib.extractingToTemp
-
-                    // extracting bundles
-                    layout
-                        .resourcesDir
-                        .absolutePath
-                        .let(::File)
-                        .listFiles(FileFilter { it.extension == "bundle" })
-                        // copying bundles to app
-                        ?.forEach { bundleFile ->
-                            logger.info("${bundleFile.absolutePath} copying to $outputDir")
-                            bundleFile.copyRecursively(
-                                target = File(outputDir, bundleFile.name),
-                                overwrite = true
-                            )
-                        }
-                }
-        }
-    }
-
-tasks.withType<AbstractNativeMacApplicationPackageAppDirTask> {
-    val task: AbstractNativeMacApplicationPackageAppDirTask = this
-
-    doLast {
-        val execFile: File = task.executable.get().asFile
-        val execDir: File = execFile.parentFile
-        val destDir: File = task.destinationDir.asFile.get()
-        val bundleID: String = task.bundleID.get()
-
-        val outputDir = File(destDir, "$bundleID.app/Contents/Resources")
-        outputDir.mkdirs()
-
-        execDir.listFiles().orEmpty()
-            .filter { it.extension == "bundle" }
-            .forEach { bundleFile ->
-                logger.info("${bundleFile.absolutePath} copying to $outputDir")
-                bundleFile.copyRecursively(
-                    target = File(outputDir, bundleFile.name),
-                    overwrite = true
-                )
-            }
-    }
+    disableStaticFrameworkWarning = true
 }
