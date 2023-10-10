@@ -25,4 +25,12 @@
     <string name="lock_with_biometry">Sperren mit Biometrie</string>
     <string name="loginHeaderPlaceHolder">Wird bald umgesetzt!\nBleiben Sie dran :)</string>
 
+    <string name="bio_request_title">Identifizieren Sie sich</string>
+    <string name="bio_request_reason">Verwenden Sie die biometrische Authentifizierung, um fortzufahren</string>
+    <string name="bio_failure_button_text">Nicht erkannt</string>
+
+    <string name="rank">Rang</string>
+    <string name="popularity">Beliebtheit</string>
+    <string name="clear">Löschen</string>
+
 </resources>

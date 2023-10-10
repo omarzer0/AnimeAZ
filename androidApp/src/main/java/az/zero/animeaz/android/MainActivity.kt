@@ -18,7 +18,7 @@ class MainActivity : FragmentActivity() {
             CompositionLocalProvider(LocalComponentContext provides rootComponentContext) {
                 App(
                     darkTheme = isSystemInDarkTheme(),
-                    dynamicColor = true,
+                    dynamicColor = false,
                 )
             }
         }

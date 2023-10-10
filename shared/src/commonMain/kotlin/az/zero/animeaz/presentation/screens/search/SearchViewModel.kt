@@ -9,15 +9,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class SearchViewModel(
+    // TODO test saving the query in savedStateHandle to survive process death
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -52,7 +51,6 @@ class SearchViewModel(
     init {
         viewModelScope.launch {
             _searchQuery
-//                .debounce(500)
                 .collectLatest {
                     getSearchData(it.trim())
                 }

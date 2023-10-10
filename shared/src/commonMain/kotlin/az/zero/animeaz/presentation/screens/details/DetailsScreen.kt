@@ -203,13 +203,13 @@ fun DetailsScreen(
 
                     DetailsIconHeader(
                         icon = Icons.Default.Tag,
-                        header = "Rank",
+                        header =  StringHelper.getStringRes(SharedRes.strings.rank),
                         body = anime.rank.toString(),
                     )
 
                     DetailsIconHeader(
                         icon = Icons.Filled.Star,
-                        header = "Popularity",
+                        header =  StringHelper.getStringRes(SharedRes.strings.popularity),
                         body = anime.popularity.toString(),
                     )
 

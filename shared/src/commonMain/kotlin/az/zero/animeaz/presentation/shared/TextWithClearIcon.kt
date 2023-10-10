@@ -32,6 +32,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import az.zero.animeaz.SharedRes
+import az.zero.animeaz.presentation.string_util.StringHelper
 
 @Composable
 fun TextWithClearIcon(
@@ -100,7 +102,7 @@ fun TextWithClearIcon(
                     Icon(
                         imageVector = Icons.Filled.Clear,
                         tint = MaterialTheme.colorScheme.onBackground,
-                        contentDescription = "Clear"
+                        contentDescription =  StringHelper.getStringRes(SharedRes.strings.clear)
                     )
                 }
             }

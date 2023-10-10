@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -64,7 +63,7 @@ fun HomeScreen(
 ) {
 
     val spanCount = 3
-    val viewModel = rememberOnRoute(instanceClass = HomeViewModel::class) { HomeViewModel(it) }
+    val viewModel = rememberOnRoute(instanceClass = HomeViewModel::class) { HomeViewModel() }
     val homeScreenState by viewModel.animeListState.collectAsState()
     val animeList = homeScreenState.animeList
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -209,17 +208,9 @@ private fun TextSwitch(
 
         Switch(
             checked = change,
-            onCheckedChange = {
-                onCheckedChange(it)
-//                isChecked = !isChecked
-            },
-//            colors = SwitchDefaults.colors(
-//                checkedThumbColor = Color.Red,
-//                uncheckedThumbColor = Color.Green,
-//                checkedTrackColor = Color.Yellow,
-//                uncheckedTrackColor = Color.Black
-//            )
+            onCheckedChange = { onCheckedChange(it) }
         )
+
         Spacer(Modifier.width(8.dp))
         Text(text = name)
     }

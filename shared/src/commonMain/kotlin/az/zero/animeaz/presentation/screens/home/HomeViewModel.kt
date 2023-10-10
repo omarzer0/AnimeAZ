@@ -5,7 +5,6 @@ import az.zero.animeaz.data.local.preferences.Preferences
 import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.domain.repository.AnimeRepository
 import az.zero.paging.Pager
-import io.github.xxfast.decompose.router.SavedStateHandle
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,9 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
-class HomeViewModel(
-    private val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
 
     private val animeRepository: AnimeRepository by inject()
 

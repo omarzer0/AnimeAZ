@@ -25,4 +25,12 @@
     <string name="lock_with_biometry">قفل باستخدام المستشعرات البيومترية</string>
     <string name="loginHeaderPlaceHolder">سيتم تنفيذه قريبًا!\nترقبوا ذلك :)</string>
 
+    <string name="bio_request_title">تحديد هويتك</string>
+    <string name="bio_request_reason">استخدم المصادقة البيومترية للمتابعة</string>
+    <string name="bio_failure_button_text">غير معروف</string>
+
+    <string name="rank">الرتبة</string>
+    <string name="popularity">الشهرة</string>
+    <string name="clear">مسح</string>
+
 </resources>

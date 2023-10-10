@@ -36,12 +36,3 @@ data class Genre(
     val type: String,
     val url: String
 ) : Parcelable
-
-
-//@Parcelize
-//data class Broadcast(
-//    val day: String,
-//    val string: String,
-//    val time: String,
-//    val timezone: String?
-//):Parcelable

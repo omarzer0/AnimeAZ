@@ -5,8 +5,8 @@ import az.zero.animeaz.data.remote.AnimeRemoteServiceImpl
 import az.zero.animeaz.data.remote.animeKtorHttpClient
 import az.zero.animeaz.data.repository.AnimeRepositoryImpl
 import az.zero.animeaz.data.usecase.AnimeFavClickUseCase
+import az.zero.animeaz.data.util.DateTimeUtil
 import az.zero.animeaz.domain.repository.AnimeRepository
-import az.zero.animeaz.domain.util.DateTimeUtil
 import az.zero.animeaz.domain.util.DateTimeUtilImpl
 import az.zero.animeaz.util.Constants.GLOBAL_SCOPE
 import io.ktor.client.HttpClient

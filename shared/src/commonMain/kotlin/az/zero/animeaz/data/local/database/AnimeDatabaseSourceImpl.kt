@@ -1,9 +1,9 @@
 package az.zero.animeaz.data.local.database
 
+import az.zero.animeaz.data.util.DateTimeUtil
 import az.zero.animeaz.database.AppDatabase
 import az.zero.animeaz.domain.database.AnimeDatabaseSource
 import az.zero.animeaz.domain.model.Anime
-import az.zero.animeaz.domain.util.DateTimeUtil
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import database.AnimeEntity

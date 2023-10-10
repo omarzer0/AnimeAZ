@@ -1,5 +1,7 @@
 package az.zero.animeaz.presentation.screens.auth
 
+import az.zero.animeaz.SharedRes
+import az.zero.animeaz.presentation.string_util.StringHelper
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import dev.icerock.moko.biometry.BiometryAuthenticator
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
@@ -9,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-
 
 class GalleryAuthViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -35,9 +36,9 @@ class GalleryAuthViewModel(
         viewModelScope.launch {
             try {
                 val isSuccess = biometryAuthenticator.checkBiometryAuthentication(
-                    requestTitle = "Identify yourself".desc(),
-                    requestReason = "Use Biometric auth to continue".desc(),
-                    failureButtonText = "Unrecognised".desc(),
+                    requestTitle = StringHelper.getStringRes(SharedRes.strings.bio_request_title).desc(),
+                    requestReason =  StringHelper.getStringRes(SharedRes.strings.bio_request_reason).desc(),
+                    failureButtonText =  StringHelper.getStringRes(SharedRes.strings.bio_failure_button_text).desc(),
                     allowDeviceCredentials = true // true - if biometric permission is not granted user can authorise by device creds
                 )
 

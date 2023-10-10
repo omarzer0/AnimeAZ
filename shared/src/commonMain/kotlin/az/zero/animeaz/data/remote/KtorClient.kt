@@ -21,15 +21,6 @@ val animeKtorHttpClient by lazy {
     }
 }
 
-//val imageDownloaderClient by lazy {
-//    HttpClient {
-//        customConfigs(
-//            baseUrl = "https://api.jikan.moe/v4/",
-//        )
-//    }
-//}
-
-
 /**
  * @param baseUrl baseUrl for your endpoints ex: https://xyz.com
  * @param customParameters Custom params to be added to each request
