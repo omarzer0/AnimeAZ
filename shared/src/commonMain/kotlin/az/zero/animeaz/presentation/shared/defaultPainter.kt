@@ -14,11 +14,11 @@ fun rememberDefaultPainter(url: String): Painter {
     //  maybe it is a problem of coping resources to ios part
     return rememberImagePainter(
         url,
-        placeholderPainter = {
-            painterResource(SharedRes.images.placeholder)
-        },
-        errorPainter = {
-            painterResource(SharedRes.images.no_image)
-        }
+//        placeholderPainter = {
+//            painterResource(SharedRes.images.placeholder)
+//        },
+//        errorPainter = {
+//            painterResource(SharedRes.images.no_image)
+//        }
     )
 }

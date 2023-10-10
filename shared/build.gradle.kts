@@ -57,12 +57,12 @@ kotlin {
     }
 
 
-    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
-        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
-            // export correct artifact to use all classes of library directly from Swift
-            export("dev.icerock.moko:mvvm-core:0.16.1")
-        }
-    }
+//    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
+//        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
+//            // export correct artifact to use all classes of library directly from Swift
+//            export("dev.icerock.moko:mvvm-core:0.16.1")
+//        }
+//    }
 
     listOf(
         iosX64(),
@@ -71,8 +71,8 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            export("dev.icerock.moko:resources:0.23.0")
-            export("dev.icerock.moko:graphics:0.9.0")
+//            export("dev.icerock.moko:resources:0.23.0")
+//            export("dev.icerock.moko:graphics:0.9.0")
         }
     }
 
@@ -131,8 +131,6 @@ kotlin {
                 implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
-
-//                implementation("io.github.xxfast:decompose-router-wear:0.3.0")
             }
         }
 
@@ -149,25 +147,12 @@ kotlin {
 }
 
 dependencies {
-    implementation("androidx.core:core:1.10.1")
-    implementation("androidx.annotation:annotation-jvm:1.6.0")
-    commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
-
+//    implementation("androidx.core:core:1.12.0")
+//    implementation("androidx.annotation:annotation-jvm:1.7.0")
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
-
-    commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
-
-    commonMainApi("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
-
-//    commonMainApi("dev.icerock.moko:permissions-compose:0.16.0") // permissions api + compose extensions
-
-//    commonMainApi("dev.icerock.moko:media:0.11.0")
-//    commonMainApi("dev.icerock.moko:media-compose:0.11.0") // Compose Multiplatform
-
-//    commonMainApi("dev.icerock.moko:biometry:0.4.0")
-    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0") // Compose Multiplatform
-
+    commonMainApi("dev.icerock.moko:resources-compose:0.23.0")
+    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0")
 }
 
 sqldelight {
@@ -179,6 +164,7 @@ sqldelight {
 multiplatformResources {
     multiplatformResourcesPackage = nameSpace
     multiplatformResourcesClassName = "SharedRes"
+    disableStaticFrameworkWarning = true
 }
 
 tasks.withType<KotlinNativeLink>()
