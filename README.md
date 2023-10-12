@@ -36,7 +36,7 @@
 - Saving key-value pair (saving either to use Lock or not for the app).
 - Locking the app using Face ID, Fingerprint, and/or PIN code.
 - Handling navigation and passing objects between screens.
-- Injecting dependencies for the shared main and inject platform-specific dependencies from each platform.
+- Injecting dependencies for the shared main and injecting platform-specific dependencies from each platform.
 - Use default images for error and loading state.
 - Search with paging for your favorite anime.
 - Show all Top-rated anime.
@@ -44,3 +44,4 @@
 
 ## Note
 The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
+
