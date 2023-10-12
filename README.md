@@ -1,5 +1,5 @@
 # AnimeAZ
-## KMP project with SharedUI and Shared Logic
+KMP project with SharedUI and Shared Logic
 
 ## App Preview
 <table align="center">
@@ -9,7 +9,7 @@
  </tr>
 </table>
 
-## Open-source libraries
+## Stack & Open-source libraries
 - 🎉🎉 Single codebase for both Android and IOS, and YES even Shared UI 🎉🎉 and should also work across all platforms.
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) for writing only single code for Android and IOS.
 - [Ktor client](https://ktor.io/docs/create-client.html) for handling network requests.
@@ -39,6 +39,7 @@
 - Handling navigation and passing objects between screens.
 - Injecting dependencies for the shared main and injecting platform-specific dependencies from each platform.
 - Use default images for error and loading state.
+- Swipe to refresh data.
 - Search with paging for your favorite anime.
 - Show all Top-rated anime.
 
