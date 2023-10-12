@@ -48,7 +48,7 @@ KMP project with SharedUI and Shared Logic
 - [Saving favorite Anime images to local file](https://www.youtube.com/@PhilippLackner](https://youtu.be/XWSzbMnpAgI?t=8836)) Shoutout to Philipp Lackner.
 
 ## Featuring
-- Shared UI for both Android and IOS (IOS is still alpha currently 11/10/2023).
+- Shared UI for both Android and IOS.
 - Single code for writing the logic of the app using Kotlin.
 - Handling paging data from network (loading initial, next, and refresh) and using it together with search functionality.
 - Add favorite Anime to a local database but save the image to a local file.
@@ -65,5 +65,6 @@ KMP project with SharedUI and Shared Logic
 
 
 ## Note
-The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
+- The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
+- The IOS still alpha currently (11/10/2023) so it is a bit laggy even with release.
 
