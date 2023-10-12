@@ -1,11 +1,7 @@
 # AnimeAZ
-KMP project with SharedUI and Shared Logic
+Kotlin Multiplatform project with SharedUI and Shared Logic.
 
 ## Showcase
-
-
-
-
 <table align="center">
  <tr>
     <th>
