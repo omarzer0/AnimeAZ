@@ -13,9 +13,11 @@ fun ScrollWrapper(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean,
     pullRefreshState: PullRefreshState,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    Box(modifier = modifier.pullRefresh(pullRefreshState)) {
+    Box(
+        modifier = modifier.pullRefresh(pullRefreshState)
+    ) {
         content()
 
         PullRefreshIndicator(

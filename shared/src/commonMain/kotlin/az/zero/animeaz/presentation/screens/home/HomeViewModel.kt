@@ -31,12 +31,11 @@ class HomeViewModel : BaseViewModel() {
     val animeListState = pagination.pagingResultFlow.map {
         HomeScreenState(
             animeList = it.items,
-            isInitialLoading = it.isInitialLoading || it.isRefreshing,
+            mainLoading = it.isInitialLoading || it.isRefreshing,
             isLoadingMore = it.isLoadingMorePages,
-            initialLoadingError = it.initialLoadingError,
+            mainError = it.initialLoadingError ?: it.refreshingError,
             loadingMoreError = it.loadingMoreError,
             isRefreshing = it.isRefreshing,
-            refreshingError = it.refreshingError
         )
     }.stateIn(
         viewModelScope,
@@ -70,10 +69,9 @@ class HomeViewModel : BaseViewModel() {
 
 data class HomeScreenState(
     val animeList: List<Anime> = emptyList(),
-    val isInitialLoading: Boolean = false,
+    val mainLoading: Boolean = false,
     val isLoadingMore: Boolean = false,
-    val initialLoadingError: Throwable? = null,
+    val mainError: Throwable? = null,
     val loadingMoreError: Throwable? = null,
-    val isRefreshing: Boolean = false,
-    val refreshingError: Throwable? = null
+    val isRefreshing: Boolean = false
 )

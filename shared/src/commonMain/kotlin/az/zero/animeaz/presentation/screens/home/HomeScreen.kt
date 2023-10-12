@@ -3,6 +3,8 @@
 package az.zero.animeaz.presentation.screens.home
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -55,9 +57,6 @@ import az.zero.animeaz.presentation.shared.PagingListener
 import az.zero.animeaz.presentation.shared.ScrollWrapper
 import az.zero.animeaz.presentation.shared.getSpan
 import az.zero.animeaz.presentation.string_util.StringHelper
-import dev.materii.pullrefresh.PullRefreshIndicator
-import dev.materii.pullrefresh.PullRefreshState
-import dev.materii.pullrefresh.pullRefresh
 import dev.materii.pullrefresh.rememberPullRefreshState
 import io.github.xxfast.decompose.router.rememberOnRoute
 import kotlinx.coroutines.launch
@@ -117,9 +116,11 @@ fun HomeScreen(
             ) {
 
                 when {
-                    homeScreenState.initialLoadingError != null -> {
+                    homeScreenState.mainError != null -> {
                         Box(
-                            modifier = Modifier.fillMaxSize().padding(16.dp),
+                            modifier = Modifier.fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .padding(16.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -128,7 +129,7 @@ fun HomeScreen(
                         }
                     }
 
-                    homeScreenState.isInitialLoading -> {
+                    homeScreenState.mainLoading -> {
                         LoadingComposable(color = Color.Red)
                     }
 
