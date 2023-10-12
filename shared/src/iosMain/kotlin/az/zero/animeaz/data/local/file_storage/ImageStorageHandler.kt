@@ -42,7 +42,6 @@ actual class ImageStorageHandler {
                     length = bytes.size.toULong()
                 )
             }
-
             data.writeToFile(
                 path = fullPath,
                 atomically = true
@@ -54,8 +53,10 @@ actual class ImageStorageHandler {
     actual suspend fun getImage(id: Long): ImageBitmap? {
         return withContext(Dispatchers.Default) {
             val fileName = "image_saved_$id.jpg"
+            val fullPath = documentDirectory.stringByAppendingPathComponent(fileName)
+
             memScoped {
-                NSData.dataWithContentsOfFile(fileName)?.let { bytes ->
+                NSData.dataWithContentsOfFile(fullPath)?.let { bytes ->
                     val array = ByteArray(bytes.length.toInt())
                     bytes.getBytes(array.refTo(0).getPointer(this), bytes.length)
                     return@withContext Bitmap.makeFromImage(Image.makeFromEncoded(array))
@@ -69,7 +70,8 @@ actual class ImageStorageHandler {
     actual suspend fun deleteImage(id: Long) {
         withContext(Dispatchers.Default) {
             val fileName = "image_saved_$id.jpg"
-            fileManager.removeItemAtPath(fileName, null)
+            val fullPath = documentDirectory.stringByAppendingPathComponent(fileName)
+            fileManager.removeItemAtPath(fullPath, null)
         }
     }
 }

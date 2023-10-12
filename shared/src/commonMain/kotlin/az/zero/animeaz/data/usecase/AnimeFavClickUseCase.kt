@@ -30,7 +30,9 @@ class AnimeFavClickUseCase(
 
     private suspend fun addAnimeToFav(anime: Anime) {
         val imageByteArray = downloadImageFromString(anime.cover)
-            .catch {}
+            .catch {
+                println("SaveImageTest: ${it.message}")
+            }
             .filterNotNull()
             .firstOrNull() ?: return
 
