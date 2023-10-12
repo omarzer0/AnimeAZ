@@ -11,9 +11,9 @@ import java.util.UUID
 actual class ImageStorageHandler(
     private val context: Context
 ) {
-    actual suspend fun saveImage(bytes: ByteArray): String {
+    actual suspend fun saveImage(id:Long, bytes: ByteArray): String {
         return withContext(Dispatchers.IO) {
-            val fileName = UUID.randomUUID().toString() + ".jpg"
+            val fileName = "image_saved_$id.jpg"
             context.openFileOutput(fileName, Context.MODE_PRIVATE).use { outputStream ->
                 outputStream.write(bytes)
             }
@@ -21,8 +21,9 @@ actual class ImageStorageHandler(
         }
     }
 
-    actual suspend fun getImage(fileName: String): ImageBitmap? {
+    actual suspend fun getImage(id: Long): ImageBitmap? {
         return withContext(Dispatchers.IO) {
+            val fileName = "image_saved_$id.jpg"
             val bytes = context.openFileInput(fileName).use { inputStream ->
                 inputStream.readBytes()
             }
@@ -30,8 +31,9 @@ actual class ImageStorageHandler(
          }
     }
 
-    actual suspend fun deleteImage(fileName: String) {
+    actual suspend fun deleteImage(id: Long) {
         return withContext(Dispatchers.IO) {
+            val fileName = "image_saved_$id.jpg"
             context.deleteFile(fileName)
         }
     }

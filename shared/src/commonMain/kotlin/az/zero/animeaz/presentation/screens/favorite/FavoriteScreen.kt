@@ -4,6 +4,7 @@ package az.zero.animeaz.presentation.screens.favorite
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -64,11 +65,23 @@ fun FavoriteScreen(
             )
         }
     ) {
-        LazyColumn(
-            modifier = Modifier.padding(it)
-        ) {
-            items(favAnimeList, key = { it.id }) {
-                FavAnimeItem(it) { viewModel.removeFromFavourite(it) }
+
+        if (favAnimeList.isEmpty()){
+            Box(
+                modifier = Modifier.fillMaxSize().padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = StringHelper.getStringRes(id = SharedRes.strings.your_fav_anime_list_is_empty),
+                )
+            }
+        }else{
+            LazyColumn(
+                modifier = Modifier.padding(it)
+            ) {
+                items(favAnimeList, key = { it.id }) {
+                    FavAnimeItem(it) { viewModel.removeFromFavourite(it) }
+                }
             }
         }
 

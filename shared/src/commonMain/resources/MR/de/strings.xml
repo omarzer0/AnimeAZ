@@ -32,5 +32,6 @@
     <string name="rank">Rang</string>
     <string name="popularity">Beliebtheit</string>
     <string name="clear">Löschen</string>
+    <string name="your_fav_anime_list_is_empty">Deine Lieblings-Anime-Liste ist leer</string>
 
 </resources>

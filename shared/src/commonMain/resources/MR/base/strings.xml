@@ -34,5 +34,6 @@
     <string name="rank">Rank</string>
     <string name="popularity">Popularity</string>
     <string name="clear">Clear</string>
+    <string name="your_fav_anime_list_is_empty">Your favorite anime list is empty</string>
 
 </resources>

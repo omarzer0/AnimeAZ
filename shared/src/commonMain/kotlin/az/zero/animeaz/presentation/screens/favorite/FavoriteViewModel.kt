@@ -1,7 +1,6 @@
 package az.zero.animeaz.presentation.screens.favorite
 
 import az.zero.animeaz.core.BaseViewModel
-import az.zero.animeaz.data.local.file_storage.ImageStorageHandler
 import az.zero.animeaz.domain.model.FavAnime
 import az.zero.animeaz.domain.repository.AnimeRepository
 import kotlinx.coroutines.flow.SharingStarted

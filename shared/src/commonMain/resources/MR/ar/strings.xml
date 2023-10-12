@@ -32,5 +32,6 @@
     <string name="rank">الرتبة</string>
     <string name="popularity">الشهرة</string>
     <string name="clear">مسح</string>
+    <string name="your_fav_anime_list_is_empty">قائمة الأنمي المفضلة لديك فارغة</string>
 
 </resources>

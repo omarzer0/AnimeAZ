@@ -7,8 +7,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.readBytes
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
@@ -21,24 +22,20 @@ class AnimeFavClickUseCase(
 
     operator fun invoke(anime: Anime) {
         globalScope.launch {
-            val isFav = animeRepository.isAnimeFavoriteById(anime.id).first()
+            val isFav = animeRepository.isAnimeFavoriteById(anime.id).firstOrNull() ?: false
             if (isFav) removeAnimeFromFav(anime)
             else addAnimeToFav(anime)
         }
     }
 
     private suspend fun addAnimeToFav(anime: Anime) {
-        val filePath = downloadImageFromString(anime.cover)
+        val imageByteArray = downloadImageFromString(anime.cover)
+            .catch {}
             .filterNotNull()
-            .first()
+            .firstOrNull() ?: return
 
-        val imagePath = imageStorageHandler.saveImage(filePath)
-        val localAnime = anime.copy(
-            cover = imagePath,
-            image = imagePath
-        )
-        animeRepository.saveAnimeAsFavourite(localAnime)
-
+        globalScope.launch { imageStorageHandler.saveImage(anime.id, imageByteArray) }
+        globalScope.launch { animeRepository.saveAnimeAsFavourite(anime) }
     }
 
     private suspend fun removeAnimeFromFav(anime: Anime) {

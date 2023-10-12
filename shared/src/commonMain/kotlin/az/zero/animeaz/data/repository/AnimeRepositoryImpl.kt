@@ -9,11 +9,14 @@ import az.zero.animeaz.domain.model.FavAnime
 import az.zero.animeaz.domain.repository.AnimeRepository
 import az.zero.animeaz.util.Constants.FILTER_ADULT_CONTENT
 import az.zero.animeaz.util.Constants.LIMIT
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.withContext
 
 class AnimeRepositoryImpl(
     private val animeRemoteService: AnimeRemoteService,
@@ -42,8 +45,9 @@ class AnimeRepositoryImpl(
         return animeDatabaseSource.isAnimeFavoriteById(id)
     }
 
-    override suspend fun deleteAnime(id: Long) {
-        animeDatabaseSource.deleteAnime(id)
+    override suspend fun deleteAnime(animeId:Long) {
+        withContext(Dispatchers.IO) { imageStorageHandler.deleteImage(animeId) }
+        animeDatabaseSource.deleteAnime(animeId)
     }
 
     override fun getAllFavouriteAnimeList(): Flow<List<FavAnime>> {
@@ -52,7 +56,7 @@ class AnimeRepositoryImpl(
                 supervisorScope {
                     async {
                         val imageBitmap =
-                            imageStorageHandler.getImage(anime.image) ?: return@async null
+                            imageStorageHandler.getImage(anime.id) ?: return@async null
                         FavAnime(
                             id = anime.id,
                             name = anime.name,

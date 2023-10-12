@@ -15,7 +15,6 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSString
-import platform.Foundation.NSUUID
 import platform.Foundation.NSUserDomainMask
 import platform.Foundation.create
 import platform.Foundation.dataWithContentsOfFile
@@ -32,9 +31,9 @@ actual class ImageStorageHandler {
         expandTilde = true
     ).first() as NSString
 
-    actual suspend fun saveImage(bytes: ByteArray): String {
+    actual suspend fun saveImage(id: Long, bytes: ByteArray): String {
         return withContext(Dispatchers.Default) {
-            val fileName = NSUUID.UUID().UUIDString + ".jpg"
+            val fileName = "image_saved_$id.jpg"
             val fullPath = documentDirectory.stringByAppendingPathComponent(fileName)
 
             val data = bytes.usePinned {
@@ -52,8 +51,9 @@ actual class ImageStorageHandler {
         }
     }
 
-    actual suspend fun getImage(fileName: String): ImageBitmap? {
+    actual suspend fun getImage(id: Long): ImageBitmap? {
         return withContext(Dispatchers.Default) {
+            val fileName = "image_saved_$id.jpg"
             memScoped {
                 NSData.dataWithContentsOfFile(fileName)?.let { bytes ->
                     val array = ByteArray(bytes.length.toInt())
@@ -66,8 +66,9 @@ actual class ImageStorageHandler {
         }
     }
 
-    actual suspend fun deleteImage(fileName: String) {
+    actual suspend fun deleteImage(id: Long) {
         withContext(Dispatchers.Default) {
+            val fileName = "image_saved_$id.jpg"
             fileManager.removeItemAtPath(fileName, null)
         }
     }
