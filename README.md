@@ -1,12 +1,29 @@
 # AnimeAZ
 KMP project with SharedUI and Shared Logic
 
-## App Preview
+## Showcase
+
 <table align="center">
  <tr>
-  <td><img src="https://github.com/omarzer0/ShowTime/blob/main/assets/1.gif" alt="Home Screen"</td>
-  <td><img src="https://github.com/omarzer0/ShowTime/blob/main/assets/2.gif" alt="Drawer Tabs"></td>
+    <th>
+    Android
+   </th>
+  
+  <th>
+    IOS
+   </th>
+  
  </tr>
+  
+  <tr>
+    <td> 
+      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4"/>
+    </td>
+    <td> 
+      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4" />
+    </td>
+    
+  </tr>
 </table>
 
 ## Stack & Open-source libraries
