@@ -3,6 +3,9 @@ KMP project with SharedUI and Shared Logic
 
 ## Showcase
 
+
+
+
 <table align="center">
  <tr>
     <th>
@@ -10,7 +13,7 @@ KMP project with SharedUI and Shared Logic
    </th>
   
   <th>
-    IOS
+       IOS (I'm limited only to 10mb video)
    </th>
   
  </tr>
@@ -20,7 +23,7 @@ KMP project with SharedUI and Shared Logic
       <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4"/>
     </td>
     <td> 
-      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4" />
+      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/180082c0-4dc4-4f5c-8410-7c030dbadd46" />
     </td>
     
   </tr>
