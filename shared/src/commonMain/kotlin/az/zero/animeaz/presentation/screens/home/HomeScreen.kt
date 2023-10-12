@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -50,8 +52,13 @@ import az.zero.animeaz.presentation.shared.AppDivider
 import az.zero.animeaz.presentation.shared.ErrorWithRetry
 import az.zero.animeaz.presentation.shared.LoadingComposable
 import az.zero.animeaz.presentation.shared.PagingListener
+import az.zero.animeaz.presentation.shared.ScrollWrapper
 import az.zero.animeaz.presentation.shared.getSpan
 import az.zero.animeaz.presentation.string_util.StringHelper
+import dev.materii.pullrefresh.PullRefreshIndicator
+import dev.materii.pullrefresh.PullRefreshState
+import dev.materii.pullrefresh.pullRefresh
+import dev.materii.pullrefresh.rememberPullRefreshState
 import io.github.xxfast.decompose.router.rememberOnRoute
 import kotlinx.coroutines.launch
 
@@ -70,6 +77,10 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     val useBioAuth by viewModel.useBioAuth.collectAsState()
     val listState = rememberLazyGridState()
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = homeScreenState.isRefreshing,
+        onRefresh = viewModel::refresh
+    )
 
     PagingListener(listState = listState) { viewModel.loadMore() }
 
@@ -78,7 +89,7 @@ fun HomeScreen(
         drawerContent = {
             HomeModalSheetContent(
                 useBioAuth = useBioAuth
-            ){
+            ) {
                 viewModel.onUseBioAuthChanged(it)
             }
         },
@@ -99,58 +110,65 @@ fun HomeScreen(
                 )
             }
         ) {
-            when {
-                homeScreenState.initialLoadingError != null -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize().padding(16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = StringHelper.getStringRes(id = SharedRes.strings.network_error),
-                        )
-                    }
-                }
+            ScrollWrapper(
+                modifier = Modifier.fillMaxSize().padding(it),
+                isRefreshing = homeScreenState.isRefreshing,
+                pullRefreshState = pullRefreshState
+            ) {
 
-                homeScreenState.isInitialLoading -> {
-                    LoadingComposable(color = Color.Red)
-                }
-
-                else -> {
-                    LazyVerticalGrid(
-                        modifier = Modifier.padding(it),
-                        columns = GridCells.Fixed(spanCount),
-                        verticalArrangement = Arrangement.spacedBy(2.dp),
-                        horizontalArrangement = Arrangement.spacedBy(2.dp),
-                        state = listState
-                    ) {
-                        items(animeList) { anime ->
-                            AnimeItem(
-                                anime = anime,
-                                onClick = onAnimeClick
+                when {
+                    homeScreenState.initialLoadingError != null -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize().padding(16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = StringHelper.getStringRes(id = SharedRes.strings.network_error),
                             )
                         }
+                    }
 
-                        if (homeScreenState.isLoadingMore) {
-                            item(span = getSpan(spanCount)) {
-                                LoadingComposable(
-                                    modifier = Modifier.fillMaxWidth().height(200.dp),
-                                    color = Color.Blue
+                    homeScreenState.isInitialLoading -> {
+                        LoadingComposable(color = Color.Red)
+                    }
+
+                    else -> {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(spanCount),
+                            verticalArrangement = Arrangement.spacedBy(2.dp),
+                            horizontalArrangement = Arrangement.spacedBy(2.dp),
+                            state = listState
+                        ) {
+                            items(animeList) { anime ->
+                                AnimeItem(
+                                    anime = anime,
+                                    onClick = onAnimeClick
                                 )
                             }
-                        }
 
-                        homeScreenState.loadingMoreError?.let {
-                            item(span = getSpan(spanCount)) {
-                                ErrorWithRetry(
-                                    errorBodyText = StringHelper.getStringRes(
-                                        SharedRes.strings.home_load_more_error
-                                    ),
-                                    retryButtonText = StringHelper.getStringRes(
-                                        SharedRes.strings.retry_btn_text
-                                    ),
-                                    onRetryClick = viewModel::loadMore
-                                )
+                            if (homeScreenState.isLoadingMore) {
+                                item(span = getSpan(spanCount)) {
+                                    LoadingComposable(
+                                        modifier = Modifier.fillMaxWidth().height(200.dp),
+                                        color = Color.Blue
+                                    )
+                                }
                             }
+
+                            homeScreenState.loadingMoreError?.let {
+                                item(span = getSpan(spanCount)) {
+                                    ErrorWithRetry(
+                                        errorBodyText = StringHelper.getStringRes(
+                                            SharedRes.strings.home_load_more_error
+                                        ),
+                                        retryButtonText = StringHelper.getStringRes(
+                                            SharedRes.strings.retry_btn_text
+                                        ),
+                                        onRetryClick = viewModel::loadMore
+                                    )
+                                }
+                            }
+
                         }
 
                     }
@@ -158,7 +176,6 @@ fun HomeScreen(
                 }
 
             }
-
         }
     }
 

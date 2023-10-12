@@ -105,6 +105,9 @@ kotlin {
                 // KMP preferences
                 implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
 
+                // Swipe to refresh
+                implementation("dev.materii.pullrefresh:pullrefresh:1.0.1")
+
             }
         }
 

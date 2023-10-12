@@ -28,9 +28,8 @@ class Pager<Item, PageType>(
         handleLock {
             this.dataSource = dataSource
             page = initialPage
-            val testList = emptyList<Item>()
             _pagingResult.value = PagingResult(
-                items = testList + initialList,
+                items = initialList,
                 isLoadingMorePages = false,
                 isInitialLoading = true,
                 noMoreItemsToLoad = false,
@@ -97,7 +96,31 @@ class Pager<Item, PageType>(
     suspend fun refresh() {
         handleLock {
             if (_pagingResult.value.isLoading || dataSource == null) return@handleLock
-            loadFirstPage(dataSource!!)
+            page = initialPage
+            _pagingResult.value = PagingResult(
+                items = initialList,
+                isLoadingMorePages = false,
+                isInitialLoading = false,
+                noMoreItemsToLoad = false,
+                initialLoadingError = null,
+                loadingMoreError = null,
+                refreshingError = null,
+                isRefreshing = true
+            )
+
+            try {
+                val items = dataSource!!.invoke(page)
+                _pagingResult.value = _pagingResult.value.copy(
+                    items = items,
+                    isRefreshing = false,
+                    refreshingError = null
+                )
+            } catch (e: Exception) {
+                _pagingResult.value = _pagingResult.value.copy(
+                    refreshingError = e.cause ?: Throwable("Unknown error when refreshing page"),
+                    isRefreshing = false
+                )
+            }
         }
     }
 

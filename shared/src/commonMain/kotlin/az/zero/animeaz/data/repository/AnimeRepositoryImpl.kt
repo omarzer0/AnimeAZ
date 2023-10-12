@@ -24,6 +24,8 @@ class AnimeRepositoryImpl(
     private val imageStorageHandler: ImageStorageHandler
 ) : AnimeRepository {
     override suspend fun getTopAnimeList(page: Int): List<Anime> {
+        delay(1000L)
+
         return animeRemoteService.getTopAnimeList(page, LIMIT, FILTER_ADULT_CONTENT)
             .animeList
             .toAnimeList()

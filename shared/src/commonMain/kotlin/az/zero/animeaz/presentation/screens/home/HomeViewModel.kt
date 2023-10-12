@@ -31,10 +31,12 @@ class HomeViewModel : BaseViewModel() {
     val animeListState = pagination.pagingResultFlow.map {
         HomeScreenState(
             animeList = it.items,
-            isInitialLoading = it.isInitialLoading,
+            isInitialLoading = it.isInitialLoading || it.isRefreshing,
             isLoadingMore = it.isLoadingMorePages,
             initialLoadingError = it.initialLoadingError,
-            loadingMoreError = it.loadingMoreError
+            loadingMoreError = it.loadingMoreError,
+            isRefreshing = it.isRefreshing,
+            refreshingError = it.refreshingError
         )
     }.stateIn(
         viewModelScope,
@@ -58,6 +60,12 @@ class HomeViewModel : BaseViewModel() {
         Preferences.saveBioAuthLock(useBioAuth)
         _useBioAuth.value = useBioAuth
     }
+
+    fun refresh() {
+        viewModelScope.launch {
+            pagination.refresh()
+        }
+    }
 }
 
 data class HomeScreenState(
@@ -65,5 +73,7 @@ data class HomeScreenState(
     val isInitialLoading: Boolean = false,
     val isLoadingMore: Boolean = false,
     val initialLoadingError: Throwable? = null,
-    val loadingMoreError: Throwable? = null
+    val loadingMoreError: Throwable? = null,
+    val isRefreshing: Boolean = false,
+    val refreshingError: Throwable? = null
 )
