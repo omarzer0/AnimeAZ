@@ -63,4 +63,5 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
 ## Note
 - The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
 - The IOS still alpha currently (11/10/2023) so it is a bit laggy even with release.
+- Can't record the Biometric Auth screen
 
