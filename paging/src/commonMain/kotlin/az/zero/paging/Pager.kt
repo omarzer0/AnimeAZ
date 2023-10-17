@@ -95,7 +95,8 @@ class Pager<Item, PageType>(
 
     suspend fun refresh() {
         handleLock {
-            if (_pagingResult.value.isLoading || dataSource == null) return@handleLock
+            if (dataSource == null) throw Exception("Can't call refresh before loadFirst. please call loadFirst to load first time")
+            if (_pagingResult.value.isLoading) return@handleLock
             page = initialPage
             _pagingResult.value = PagingResult(
                 items = initialList,

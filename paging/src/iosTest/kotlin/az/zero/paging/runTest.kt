@@ -17,6 +17,9 @@ import platform.Foundation.addTimeInterval
 import platform.Foundation.performBlock
 import platform.Foundation.runUntilDate
 import kotlin.coroutines.CoroutineContext
+/*
+ * Copyright 2020 IceRock MAG Inc. Use of this source code is governed by the Apache 2.0 license.
+ */
 
 @DelicateCoroutinesApi
 actual fun <T> runTest(block: suspend CoroutineScope.() -> T): T {

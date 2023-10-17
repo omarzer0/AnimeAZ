@@ -1,75 +1,91 @@
-//package az.zero.paging
-//
-//import kotlinx.coroutines.async
-//import kotlin.test.BeforeTest
-//import kotlin.test.Test
-//import kotlin.test.assertTrue
-//
-//class PagerTest : BaseTest() {
-//    private lateinit var pager: Pager<String, Int>
-//
-//    @BeforeTest
-//    fun setup() {
-//        pager = Pager(
-//            dataSource = { currentList, page -> getItems(currentList, page) },
-//            initialList = emptyList(),
-//            comparator = { a, b -> a == b },
-//            initialPage = 1,
-//            nextPageLoader = { it + 1 }
-//        )
-//    }
-//
+package az.zero.paging
+
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertTrue
+
+class PagerTest : BaseTest() {
+    private lateinit var pager: Pager<String, Int>
+    private val initialEmptyList = emptyList<String>()
+    private val initialListWithData = listOf("Init #test1", "Init #test2", "Init #test3")
+    private val initialPage = 1
+
+    @BeforeTest
+    fun setup() {
+        println("Setup method run")
+        pager = Pager(
+            initialList = initialEmptyList,
+            comparator = { a, b -> a == b },
+            initialPage = initialPage,
+            howToLoadNext = { it + 1 }
+        )
+    }
+
+    @Test
+    fun `test calling loadFirstPage loads first list items`() = runTest {
+        pager.loadFirstPage(dataSource = { getItems(initialEmptyList, it) })
+
+        val expected = getItems(initialEmptyList, initialPage)
+        val actual = pager.pagingResult.value.items
+        println("expected: $expected")
+        println("actual: $actual")
+        assertTrue { expected == actual }
+    }
+
+
+    @Test
+    fun `test loading next page adds the second page`() = runTest {
+        pager.loadFirstPage(dataSource = { getItems(initialEmptyList, it) })
+        val expectedList = getItems(pager.pagingResult.value.items, 2)
+
+        pager.loadNextPage()
+
+        val actualList = pager.pagingResult.value.items
+
+        println("expectedList: $expectedList")
+        println("actualList: $actualList")
+
+        assertTrue { expectedList == actualList }
+    }
+
+
+    @Test
+    fun `test refresh loads the first page and resets the currentList to initialList`() = runTest {
+        pager.loadFirstPage(dataSource = { getItems(initialEmptyList, it) })
+
+        pager.refresh()
+
+        val expectedList = getItems(initialEmptyList, initialPage)
+        val actualList = pager.pagingResult.value.items
+
+        println("expectedList: $expectedList")
+        println("actualList: $actualList")
+
+        assertTrue { expectedList == actualList }
+    }
+
+    @Test
+    fun `test if load first and next called together - loadNext should not work`() = runTest {
+        val next = async { pager.loadNextPage() }
+        val next2 = async { pager.loadNextPage() }
+        val first = async { pager.loadFirstPage(dataSource = { getItems(initialEmptyList, it) }) }
+
+        awaitAll(first, next, next2)
+
+        val expectedList = getItems(initialEmptyList, initialPage)
+        val actualList = pager.pagingResult.value.items
+
+        println("expectedList: $expectedList")
+        println("actualList: $actualList")
+
+        assertTrue { expectedList == actualList }
+    }
+
 //    @Test
-//    fun `test calling loadFirstPage loads first list items`() = runTest {
-//        pager.loadFirstPageSuspend()
-//        assertTrue {
-//            pager.pagingState.value.currentList == getItems(
-//                pager.initialList,
-//                pager.initialPage
-//            )
-//        }
+//    fun `test refresh without loading first should throw exception`() = runTest {
+//
 //    }
-//
-//
-//    @Test
-//    fun `test loading next page adds the second page`() = runTest {
-//        val expectedPage = pager.pagingState.value.currentPage.plus(1)
-//        val expectedList = getItems(pager.pagingState.value.currentList, expectedPage)
-//
-//        pager.loadNextPageSuspend()
-//
-//        val actualPage = pager.pagingState.value.currentPage
-//        val actualList = pager.pagingState.value.currentList
-//
-//        assertTrue { expectedPage == actualPage }
-//        assertTrue { expectedList == actualList }
-//    }
-//
-//    @Test
-//    fun `test refresh loads the first page and resets the currentList to initialList`() = runTest {
-//        val expectedList = getItems(pager.initialList, pager.initialPage)
-//        pager.refreshSuspend()
-//        val actualList = pager.pagingState.value.currentList
-//
-//        assertTrue { expectedList == actualList }
-//    }
-//
-////    @Test
-////    fun `test if load first and next called together - loadNext should not work`() = runTest {
-////        val first = async { pager.loadFirstPageSuspend() }
-////        val next = async { pager.loadNextPageSuspend() }
-////        val next2 = async { pager.loadNextPageSuspend() }
-////        val next3 = async { pager.loadNextPageSuspend() }
-////        val next4 = async { pager.loadNextPageSuspend() }
-////
-////        first.await()
-////
-////        val expectedList = getItems(pager.initialList, 1)
-////        println("expectedList: $expectedList")
-////        val actualList = pager.pagingState.value.currentList
-////        println("actualList: $actualList")
-////
-////        assertTrue { expectedList == actualList }
-////    }
-//
-//}
+
+}
