@@ -1,8 +1,7 @@
 # AnimeAZ
-KMP project with SharedUI and Shared Logic
+Kotlin Multiplatform project with SharedUI and Shared Logic.
 
 ## Showcase
-
 <table align="center">
  <tr>
     <th>
@@ -10,7 +9,7 @@ KMP project with SharedUI and Shared Logic
    </th>
   
   <th>
-    IOS
+       IOS (I'm limited only to 10mb video)
    </th>
   
  </tr>
@@ -20,7 +19,7 @@ KMP project with SharedUI and Shared Logic
       <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4"/>
     </td>
     <td> 
-      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4" />
+      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/180082c0-4dc4-4f5c-8410-7c030dbadd46" />
     </td>
     
   </tr>
@@ -45,7 +44,7 @@ KMP project with SharedUI and Shared Logic
 - [Saving favorite Anime images to local file](https://www.youtube.com/@PhilippLackner](https://youtu.be/XWSzbMnpAgI?t=8836)) Shoutout to Philipp Lackner.
 
 ## Featuring
-- Shared UI for both Android and IOS (IOS is still alpha currently 11/10/2023).
+- Shared UI for both Android and IOS.
 - Single code for writing the logic of the app using Kotlin.
 - Handling paging data from network (loading initial, next, and refresh) and using it together with search functionality.
 - Add favorite Anime to a local database but save the image to a local file.
@@ -62,5 +61,11 @@ KMP project with SharedUI and Shared Logic
 
 
 ## Note
-The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
+- The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
+- The IOS still alpha currently (11/10/2023) so it is a bit laggy even with release.
+- Can't record the Biometric Auth screen.
+
+
+
+
 
