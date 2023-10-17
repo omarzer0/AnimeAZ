@@ -41,7 +41,7 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
 - [MOKO Biometry](https://github.com/icerockdev/moko-biometry) for handling biometric authentication (Face ID, Touch ID, and also using PIN code).
 - [Pull Refresh](https://github.com/MateriiApps/pullrefresh) Standalone pull to refresh library for Jetpack Compose multiplatform without the reliance on Material (As the dev says).
 - [Material 3](https://m3.material.io/) for theming and using dynamic color on Android.
-- [Saving favorite Anime images to local file](https://www.youtube.com/@PhilippLackner](https://youtu.be/XWSzbMnpAgI?t=8836)) Shoutout to Philipp Lackner.
+- [Saving favorite Anime images to local file](https://youtu.be/XWSzbMnpAgI?t=8838) Shoutout to Philipp Lackner.
 
 ## Featuring
 - Shared UI for both Android and IOS.
