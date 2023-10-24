@@ -2,6 +2,7 @@
 Kotlin Multiplatform project with SharedUI and Shared Logic.
 
 ## Showcase
+
 <table align="center">
  <tr>
     <th>
@@ -16,10 +17,10 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
   
   <tr>
     <td> 
-      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/e62e9ca8-450d-47a1-8322-94b8174893a4"/>
+      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/441e1dc5-10d8-40ab-9c6b-a7b8a34d6302"/>
     </td>
     <td> 
-      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/180082c0-4dc4-4f5c-8410-7c030dbadd46" />
+      <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/76438784-8d69-4bc0-b99f-61aa14fea93a" />
     </td>
     
   </tr>
