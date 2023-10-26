@@ -34,6 +34,8 @@ val koinVersion = "3.4.2"
 kotlin {
     targetHierarchy.default()
 
+    jvm("desktop")
+
     android {
         compilations.all {
             kotlinOptions {
@@ -152,6 +154,15 @@ kotlin {
             }
         }
 
+        val desktopMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(compose.desktop.common)
+                implementation("io.ktor:ktor-client-cio:2.3.1")
+                implementation("com.squareup.sqldelight:sqlite-driver:1.5.4")
+            }
+        }
+
     }
 }
 
@@ -159,7 +170,7 @@ dependencies {
     commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
     commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
     commonMainApi("dev.icerock.moko:resources-compose:0.23.0")
-    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0")
+//    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0")
 }
 
 sqldelight {

@@ -3,7 +3,6 @@ buildscript {
         classpath("com.squareup.sqldelight:gradle-plugin:1.5.5")
         classpath("com.arkivanov.decompose:decompose:2.1.0-compose-experimental-alpha-05")
         classpath("dev.icerock.moko:resources-generator:0.23.0")
-//        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.13.3")
     }
 }
 

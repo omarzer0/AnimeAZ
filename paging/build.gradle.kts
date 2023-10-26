@@ -7,6 +7,8 @@ plugins {
 kotlin {
     targetHierarchy.default()
 
+    jvm("desktop")
+
     android {
         compilations.all {
             kotlinOptions {
@@ -54,6 +56,11 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+
+        val desktopMain by getting {
+            dependsOn(commonMain)
+        }
+
     }
 }
 

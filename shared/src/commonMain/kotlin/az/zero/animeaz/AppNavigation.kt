@@ -18,5 +18,5 @@ sealed class ScreenDestination : Parcelable {
     object SearchScreenDestination : ScreenDestination()
     object FavoriteScreenDestination : ScreenDestination()
     data class DetailsScreenDestination(val anime: Anime) : ScreenDestination()
-    object AuthDestination : ScreenDestination()
+//    object AuthDestination : ScreenDestination()
 }
