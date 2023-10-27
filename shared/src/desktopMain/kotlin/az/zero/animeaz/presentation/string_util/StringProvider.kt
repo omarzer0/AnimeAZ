@@ -4,14 +4,11 @@ import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.desc.Resource
 import dev.icerock.moko.resources.desc.StringDesc
 import dev.icerock.moko.resources.format
+import java.util.Locale
 
-actual class StringProvider() {
+actual class StringProvider {
     actual fun get(id: StringResource, args :List<Any>): String {
-        return if (args.isEmpty()) {
-            StringDesc.Resource(id).toString()
-        } else {
-            id.format(args).toString()
-        }
+        return id.localized(locale = Locale.getDefault(),args)
     }
 
 }

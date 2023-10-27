@@ -19,6 +19,7 @@ class MainActivity : FragmentActivity() {
                 App(
                     darkTheme = isSystemInDarkTheme(),
                     dynamicColor = false,
+                    rootComponentContext = rootComponentContext
                 )
             }
         }

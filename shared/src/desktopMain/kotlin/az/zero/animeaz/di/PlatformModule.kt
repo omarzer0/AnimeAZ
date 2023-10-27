@@ -14,7 +14,10 @@ actual class PlatformModule {
     actual val module: Module = module {
 
         single<SqlDriver> { DBDriverFactory().create() }
-        single<AppDatabase> { AppDatabase(get()) }
+        single<AppDatabase> {
+            AppDatabase.Schema.create(get())
+            AppDatabase(get())
+        }
         single<AnimeDatabaseSource> { AnimeDatabaseSourceImpl(get(),get()) }
 
         single<StringProvider> { StringProvider() }

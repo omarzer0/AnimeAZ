@@ -5,6 +5,6 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 
 actual class DBDriverFactory {
     actual fun create(): SqlDriver {
-        return JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+        return JdbcSqliteDriver("jdbc:sqlite:${DBConstants.DATABASE_NAME}")
     }
 }
