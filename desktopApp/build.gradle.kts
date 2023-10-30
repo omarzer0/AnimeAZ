@@ -3,7 +3,6 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
-    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -23,8 +22,6 @@ kotlin {
                 // Koin
                 implementation("io.insert-koin:koin-core:3.4.2")
 
-//                // MOKO resources
-//                implementation("dev.icerock.moko:resources-compose:0.23.0")
             }
         }
     }
@@ -40,12 +37,4 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
-}
-
-val nameSpace = "az.zero.animeaz"
-
-multiplatformResources {
-    multiplatformResourcesPackage = nameSpace
-    multiplatformResourcesClassName = "SharedRes"
-    disableStaticFrameworkWarning = true
 }
