@@ -60,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.zero.animeaz.SharedRes
 import az.zero.animeaz.domain.model.Anime
+import az.zero.animeaz.presentation.shared.mirror
 import az.zero.animeaz.presentation.shared.rememberDefaultPainter
 import az.zero.animeaz.presentation.string_util.StringHelper
 import az.zero.animeaz.presentation.theme.CustomColors
@@ -271,6 +272,7 @@ fun DetailsTopBar(
         },
         navigationIcon = {
             IconButton(
+                modifier = Modifier.mirror(),
                 onClick = onBackClick,
                 content = {
                     Icon(

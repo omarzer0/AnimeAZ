@@ -3,8 +3,6 @@
 package az.zero.animeaz.presentation.screens.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -48,6 +46,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
+import az.zero.animeaz.core.PlatformName
+import az.zero.animeaz.core.getPlatformName
 import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.presentation.shared.AnimeItem
 import az.zero.animeaz.presentation.shared.AppDivider
@@ -55,7 +55,7 @@ import az.zero.animeaz.presentation.shared.ErrorWithRetry
 import az.zero.animeaz.presentation.shared.LoadingComposable
 import az.zero.animeaz.presentation.shared.PagingListener
 import az.zero.animeaz.presentation.shared.ScrollWrapper
-import az.zero.animeaz.presentation.shared.getSpan
+import az.zero.animeaz.presentation.shared.getSpanAdaptive
 import az.zero.animeaz.presentation.string_util.StringHelper
 import dev.materii.pullrefresh.rememberPullRefreshState
 import io.github.xxfast.decompose.router.rememberOnRoute
@@ -67,8 +67,11 @@ fun HomeScreen(
     onSearchClick: () -> Unit,
     onFavListClick: () -> Unit,
 ) {
+    val minItemSize = when (getPlatformName()) {
+        PlatformName.ANDROID, PlatformName.IOS -> 100.dp
+        PlatformName.DESKTOP -> 300.dp
+    }
 
-    val spanCount = 3
     val viewModel = rememberOnRoute(instanceClass = HomeViewModel::class) { HomeViewModel() }
     val homeScreenState by viewModel.animeListState.collectAsState()
     val animeList = homeScreenState.animeList
@@ -135,12 +138,12 @@ fun HomeScreen(
 
                     else -> {
                         LazyVerticalGrid(
-                            columns = GridCells.Fixed(spanCount),
+                            columns = GridCells.Adaptive(minItemSize),
                             verticalArrangement = Arrangement.spacedBy(2.dp),
                             horizontalArrangement = Arrangement.spacedBy(2.dp),
                             state = listState
                         ) {
-                            items(animeList) { anime ->
+                            items(animeList, key = { it.id }) { anime ->
                                 AnimeItem(
                                     anime = anime,
                                     onClick = onAnimeClick
@@ -148,7 +151,7 @@ fun HomeScreen(
                             }
 
                             if (homeScreenState.isLoadingMore) {
-                                item(span = getSpan(spanCount)) {
+                                item(span = { getSpanAdaptive() }) {
                                     LoadingComposable(
                                         modifier = Modifier.fillMaxWidth().height(200.dp),
                                         color = Color.Blue
@@ -157,7 +160,7 @@ fun HomeScreen(
                             }
 
                             homeScreenState.loadingMoreError?.let {
-                                item(span = getSpan(spanCount)) {
+                                item(span = { getSpanAdaptive() }) {
                                     ErrorWithRetry(
                                         errorBodyText = StringHelper.getStringRes(
                                             SharedRes.strings.home_load_more_error

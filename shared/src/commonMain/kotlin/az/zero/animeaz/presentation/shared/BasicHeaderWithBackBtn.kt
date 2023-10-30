@@ -42,8 +42,9 @@ fun BasicHeaderWithBackBtn(
                 onClick = onBackPressed
             ) {
                 Icon(
-                    Icons.Filled.ArrowBack,
-                    StringHelper.getStringRes(SharedRes.strings.back),
+                    modifier = Modifier.mirror(),
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = StringHelper.getStringRes(SharedRes.strings.back),
                     tint = backButtonTint,
                 )
             }

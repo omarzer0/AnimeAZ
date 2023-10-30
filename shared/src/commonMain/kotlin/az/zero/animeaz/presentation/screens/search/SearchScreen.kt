@@ -26,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
+import az.zero.animeaz.core.PlatformName.*
+import az.zero.animeaz.core.getPlatformName
 import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.presentation.shared.AnimeItem
 import az.zero.animeaz.presentation.shared.AppDivider
@@ -34,7 +36,7 @@ import az.zero.animeaz.presentation.shared.ErrorWithRetry
 import az.zero.animeaz.presentation.shared.LoadingComposable
 import az.zero.animeaz.presentation.shared.PagingListener
 import az.zero.animeaz.presentation.shared.TextWithClearIcon
-import az.zero.animeaz.presentation.shared.getSpan
+import az.zero.animeaz.presentation.shared.getSpanAdaptive
 import az.zero.animeaz.presentation.string_util.StringHelper
 import io.github.xxfast.decompose.router.rememberOnRoute
 
@@ -43,11 +45,14 @@ fun SearchScreen(
     onBackPressed: () -> Unit,
     onAnimeClick: (Anime) -> Unit
 ) {
+    val minItemSize = when (getPlatformName()) {
+        ANDROID, IOS -> 100.dp
+        DESKTOP -> 300.dp
+    }
 
     val viewModel = rememberOnRoute(instanceClass = SearchViewModel::class) { SearchViewModel(it) }
     val query by viewModel.searchQuery.collectAsState()
 
-    val spanCount = 3
     val searchScreenState by viewModel.searchScreenState.collectAsState()
     val animeList = searchScreenState.animeList
 
@@ -94,7 +99,7 @@ fun SearchScreen(
             else -> {
                 LazyVerticalGrid(
                     modifier = Modifier.padding(it),
-                    columns = GridCells.Fixed(spanCount),
+                    columns = GridCells.Adaptive(minItemSize),
                     verticalArrangement = Arrangement.spacedBy(2.dp),
                     horizontalArrangement = Arrangement.spacedBy(2.dp),
                     state = listState
@@ -104,7 +109,7 @@ fun SearchScreen(
                     }
 
                     if (searchScreenState.isLoadingMore) {
-                        item(span = getSpan(spanCount)) {
+                        item(span = { getSpanAdaptive() }) {
                             LoadingComposable(
                                 modifier = Modifier.fillMaxWidth().height(200.dp),
                                 color = Color.Blue
@@ -113,7 +118,7 @@ fun SearchScreen(
                     }
 
                     searchScreenState.loadingMoreError?.let {
-                        item(span = getSpan(spanCount)) {
+                        item(span = { getSpanAdaptive() }) {
                             ErrorWithRetry(
                                 errorBodyText = StringHelper.getStringRes(
                                     SharedRes.strings.home_load_more_error

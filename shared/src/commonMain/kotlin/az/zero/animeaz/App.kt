@@ -3,6 +3,8 @@ package az.zero.animeaz
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import az.zero.animeaz.ScreenDestination.DetailsScreenDestination
 import az.zero.animeaz.ScreenDestination.FavoriteScreenDestination
 import az.zero.animeaz.ScreenDestination.HomeScreenDestination
@@ -27,7 +29,10 @@ fun App(
     dynamicColor: Boolean,
     rootComponentContext: DefaultComponentContext
 ) {
-    CompositionLocalProvider(LocalComponentContext provides rootComponentContext) {
+    CompositionLocalProvider(
+        LocalComponentContext provides rootComponentContext,
+        LocalLayoutDirection provides LayoutDirection.Ltr
+    ) {
         AppTheme(
             darkTheme = darkTheme,
             dynamicColor = dynamicColor

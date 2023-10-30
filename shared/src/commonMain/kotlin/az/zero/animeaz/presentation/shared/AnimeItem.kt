@@ -23,6 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
+import az.zero.animeaz.core.PlatformName.ANDROID
+import az.zero.animeaz.core.PlatformName.DESKTOP
+import az.zero.animeaz.core.PlatformName.IOS
+import az.zero.animeaz.core.getPlatformName
 import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.presentation.string_util.StringHelper
 import az.zero.animeaz.presentation.theme.CustomColors.DarkOrange
@@ -38,9 +42,14 @@ fun AnimeItem(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .clickableSafeClick { onClick(anime) }
-            .padding(4.dp),
+            .padding(4.dp)
     ) {
-        val image = rememberDefaultPainter(url = anime.image)
+        val url = when (getPlatformName()) {
+            ANDROID, IOS -> anime.image
+            DESKTOP -> anime.cover
+        }
+
+        val image = rememberDefaultPainter(url = url)
         val animeShowState = StringHelper.getStringRes(
             if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished
         )
