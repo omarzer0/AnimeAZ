@@ -14,7 +14,7 @@ fun main() {
     val lifecycle = LifecycleRegistry()
     val rootComponentContext = DefaultComponentContext(lifecycle = lifecycle)
 
-    // FIXME I haven't figure out how to setup koin for Desktop correctly
+    // FIXME I haven't figure out how to setup koin for Desktop correctly but it works
     startKoin {
         modules(PlatformModule().module + sharedModule)
     }
@@ -23,7 +23,7 @@ fun main() {
         val windowState: WindowState = rememberWindowState()
 
         Window(
-            title = "AnimeAZTest",
+            title = "AnimeAZ",
             state = windowState,
             onCloseRequest = { exitApplication() }
         ) {

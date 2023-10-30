@@ -67,11 +67,9 @@ actual class ImageStorageHandler {
         }
     }
 
-    actual suspend fun deleteImage(id: Long) {
-        withContext(Dispatchers.Default) {
-            val fileName = "image_saved_$id.jpg"
-            val fullPath = documentDirectory.stringByAppendingPathComponent(fileName)
-            fileManager.removeItemAtPath(fullPath, null)
-        }
+    actual suspend fun deleteImage(id: Long): Boolean {
+        val fileName = "image_saved_$id.jpg"
+        val fullPath = documentDirectory.stringByAppendingPathComponent(fileName)
+        return fileManager.removeItemAtPath(fullPath, null)
     }
 }

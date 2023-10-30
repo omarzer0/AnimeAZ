@@ -33,12 +33,17 @@ class AnimeDatabaseSourceImpl(
         )
     }
 
-    override fun isAnimeFavoriteById(id: Long): Flow<Boolean> {
+    override fun isAnimeFavoriteByIdFlow(id: Long): Flow<Boolean> {
         return queries.isAnimeFavoriteById(id).asFlow()
             .map {
                 val exist = it.executeAsOneOrNull()
                 exist != null && exist > 0
             }
+    }
+
+    override fun isAnimeFavoriteById(id: Long): Boolean {
+        val exist = queries.isAnimeFavoriteById(id).executeAsOneOrNull()
+        return exist != null && exist > 0
     }
 
     override suspend fun deleteAnime(id: Long) {

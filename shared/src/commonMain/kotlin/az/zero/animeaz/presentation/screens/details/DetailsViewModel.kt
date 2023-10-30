@@ -16,7 +16,7 @@ class DetailsViewModel(
     private val animeRepository: AnimeRepository by inject()
     private val animeFavClickUseCase: AnimeFavClickUseCase by inject()
 
-    val isFav = animeRepository.isAnimeFavoriteById(anime.id).stateIn(
+    val isFav = animeRepository.isAnimeFavoriteByIdFlow(anime.id).stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
         false

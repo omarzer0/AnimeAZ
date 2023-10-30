@@ -8,9 +8,10 @@ interface AnimeRepository {
     suspend fun getTopAnimeList(page: Int): List<Anime>
     suspend fun searchForAnime(query: String, page: Int): List<Anime>
     suspend fun saveAnimeAsFavourite(anime: Anime)
-    fun isAnimeFavoriteById(id:Long): Flow<Boolean>
-    suspend fun deleteAnime(animeId:Long)
+    suspend fun deleteAnime(animeId: Long)
+    fun isAnimeFavoriteByIdFlow(id: Long): Flow<Boolean>
     fun getAllFavouriteAnimeList(): Flow<List<FavAnime>>
+    fun isAnimeFavoriteById(id: Long): Boolean
 }
 
 

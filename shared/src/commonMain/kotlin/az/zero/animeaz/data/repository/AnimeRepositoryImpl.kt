@@ -9,14 +9,11 @@ import az.zero.animeaz.domain.model.FavAnime
 import az.zero.animeaz.domain.repository.AnimeRepository
 import az.zero.animeaz.util.Constants.FILTER_ADULT_CONTENT
 import az.zero.animeaz.util.Constants.LIMIT
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.supervisorScope
-import kotlinx.coroutines.withContext
 
 class AnimeRepositoryImpl(
     private val animeRemoteService: AnimeRemoteService,
@@ -44,13 +41,18 @@ class AnimeRepositoryImpl(
         animeDatabaseSource.insertAnime(anime)
     }
 
-    override fun isAnimeFavoriteById(id: Long): Flow<Boolean> {
+    override fun isAnimeFavoriteByIdFlow(id: Long): Flow<Boolean> {
+        return animeDatabaseSource.isAnimeFavoriteByIdFlow(id)
+    }
+
+    override fun isAnimeFavoriteById(id: Long): Boolean {
         return animeDatabaseSource.isAnimeFavoriteById(id)
     }
 
-    override suspend fun deleteAnime(animeId:Long) {
-        withContext(Dispatchers.IO) { imageStorageHandler.deleteImage(animeId) }
-        animeDatabaseSource.deleteAnime(animeId)
+    override suspend fun deleteAnime(animeId: Long) {
+        val isImageDeleted = imageStorageHandler.deleteImage(animeId)
+        if (isImageDeleted) animeDatabaseSource.deleteAnime(animeId)
+        else throw Exception("Can't delete the image")
     }
 
     override fun getAllFavouriteAnimeList(): Flow<List<FavAnime>> {
@@ -58,8 +60,7 @@ class AnimeRepositoryImpl(
             it.map { anime ->
                 supervisorScope {
                     async {
-                        val imageBitmap =
-                            imageStorageHandler.getImage(anime.id) ?: return@async null
+                        val imageBitmap = imageStorageHandler.getImage(anime.id)!!
                         FavAnime(
                             id = anime.id,
                             name = anime.name,
@@ -71,7 +72,16 @@ class AnimeRepositoryImpl(
                         )
                     }
                 }
-            }.mapNotNull { it.await() }
+            }.mapNotNull { deferredAnime ->
+                try {
+                    deferredAnime.await()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
+                }
+            }
         }
     }
+
+
 }

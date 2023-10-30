@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface AnimeDatabaseSource {
     fun getAllFavouriteAnimeList(): Flow<List<AnimeEntity>>
-    fun isAnimeFavoriteById(id: Long): Flow<Boolean>
+    fun isAnimeFavoriteByIdFlow(id: Long): Flow<Boolean>
+    fun isAnimeFavoriteById(id: Long): Boolean
     suspend fun insertAnime(anime: Anime)
     suspend fun deleteAnime(id: Long)
 }

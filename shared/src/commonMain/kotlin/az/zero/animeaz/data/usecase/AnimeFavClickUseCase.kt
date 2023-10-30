@@ -6,11 +6,8 @@ import az.zero.animeaz.domain.repository.AnimeRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.readBytes
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 class AnimeFavClickUseCase(
@@ -20,9 +17,11 @@ class AnimeFavClickUseCase(
     private val animeRepository: AnimeRepository
 ) {
 
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable -> throwable.printStackTrace() }
+
     operator fun invoke(anime: Anime) {
-        globalScope.launch {
-            val isFav = animeRepository.isAnimeFavoriteById(anime.id).firstOrNull() ?: false
+        globalScope.launch(exceptionHandler) {
+            val isFav = animeRepository.isAnimeFavoriteById(anime.id)
             if (isFav) removeAnimeFromFav(anime)
             else addAnimeToFav(anime)
         }
@@ -30,23 +29,16 @@ class AnimeFavClickUseCase(
 
     private suspend fun addAnimeToFav(anime: Anime) {
         val imageByteArray = downloadImageFromString(anime.cover)
-            .catch {
-                println("SaveImageTest: ${it.message}")
-            }
-            .filterNotNull()
-            .firstOrNull() ?: return
-
-        globalScope.launch { imageStorageHandler.saveImage(anime.id, imageByteArray) }
-        globalScope.launch { animeRepository.saveAnimeAsFavourite(anime) }
+        imageStorageHandler.saveImage(anime.id, imageByteArray)
+        animeRepository.saveAnimeAsFavourite(anime)
     }
 
     private suspend fun removeAnimeFromFav(anime: Anime) {
         animeRepository.deleteAnime(anime.id)
     }
 
-    private fun downloadImageFromString(link: String) = flow {
-        val imageBytes = client.get(link).readBytes()
-        emit(imageBytes)
+    private suspend fun downloadImageFromString(link: String): ByteArray {
+        return client.get(link).readBytes()
     }
 
 }
