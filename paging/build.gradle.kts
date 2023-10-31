@@ -8,6 +8,11 @@ kotlin {
     targetHierarchy.default()
 
     jvm("desktop")
+    js {
+        browser()
+        binaries.executable()
+    }
+
 
     android {
         compilations.all {
@@ -61,6 +66,18 @@ kotlin {
             dependsOn(commonMain)
         }
 
+        val desktopTest by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+            }
+        }
+
+        val jsTest by getting{
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            }
+        }
     }
 }
 

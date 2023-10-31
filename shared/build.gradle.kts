@@ -36,6 +36,11 @@ kotlin {
 
     jvm("desktop")
 
+    js {
+        browser()
+        binaries.executable()
+    }
+
     android {
         compilations.all {
             kotlinOptions {
@@ -107,8 +112,8 @@ kotlin {
                 // KMP preferences
                 implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
 
-                // Swipe to refresh
-                implementation("dev.materii.pullrefresh:pullrefresh:1.0.1")
+//                // Swipe to refresh
+//                implementation("dev.materii.pullrefresh:pullrefresh:1.0.1")
 
             }
         }
@@ -144,7 +149,7 @@ kotlin {
         }
 
         val iosMain by getting {
-            dependsOn(commonMain)
+//            dependsOn(commonMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
@@ -155,13 +160,23 @@ kotlin {
         }
 
         val desktopMain by getting {
-            dependsOn(commonMain)
+//            dependsOn(commonMain)
             dependencies {
                 implementation(compose.desktop.common)
                 implementation("io.ktor:ktor-client-cio:2.3.1")
                 implementation("com.squareup.sqldelight:sqlite-driver:1.5.4")
             }
         }
+
+        val jsMain by getting{
+            dependsOn(commonMain)
+            dependencies {
+                implementation(compose.html.core)
+                implementation("com.squareup.sqldelight:sqljs-driver:1.5.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+            }
+        }
+
 
     }
 }
@@ -184,3 +199,9 @@ multiplatformResources {
     multiplatformResourcesClassName = "SharedRes"
     disableStaticFrameworkWarning = true
 }
+
+compose.experimental {
+    web.application {}
+}
+
+tasks.getByPath("jsProcessResources").dependsOn("libresGenerateResources")

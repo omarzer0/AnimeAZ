@@ -12,6 +12,7 @@ import az.zero.animeaz.util.Constants.LIMIT
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.supervisorScope
 
@@ -80,6 +81,8 @@ class AnimeRepositoryImpl(
                     null
                 }
             }
+        }.catch {
+
         }
     }
 
