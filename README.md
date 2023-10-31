@@ -1,6 +1,8 @@
 # AnimeAZ
 Kotlin Multiplatform project with SharedUI and Shared Logic.
 
+## Note: The Desktop version is almost ready! WO HOOO 🎉🎉🎉🎉
+
 ## Showcase
 
 <table align="center">
