@@ -26,30 +26,6 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
   </tr>
 </table>
 
-# How to run
-
-### Before running!
-- check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
-- install JDK 17 on your machine
-- add `local.properties` file to the project root and set a path to Android SDK there
-
-### Android
-To run the application on android device/emulator:
-- open project in Android Studio and run imported android run configuration
-
-To build the application bundle:
-- run `./gradlew :shared:assembleDebug`
-- find `.apk` file in `shared/build/outputs/apk/debug/shared-debug.apk`
-
-### Desktop
-Run the desktop application: `./gradlew :shared:run`
-
-### iOS
-To run the application on iPhone device/simulator:
-- Open `iosApp/iosApp.xcproject` in Xcode and run standard configuration
-- Or use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile) for Android Studio
-
-
 
 ## Stack & Open-source libraries
 - 🎉🎉 Single codebase for both Android and IOS, and YES even Shared UI 🎉🎉 and should also work across all platforms.
@@ -84,6 +60,30 @@ To run the application on iPhone device/simulator:
 - Swipe to refresh data.
 - Search with paging for your favorite anime.
 - Show all Top-rated anime.
+
+
+# How to run
+
+### Before running!
+- check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
+- install JDK 17 on your machine
+- add `local.properties` file to the project root and set a path to Android SDK there
+
+### Android
+To run the application on android device/emulator:
+- open project in Android Studio and run imported android run configuration
+
+To build the application bundle:
+- run `./gradlew :shared:assembleDebug`
+- find `.apk` file in `shared/build/outputs/apk/debug/shared-debug.apk`
+
+### Desktop
+Run the desktop application: `./gradlew :shared:run`
+
+### iOS
+To run the application on iPhone device/simulator:
+- Open `iosApp/iosApp.xcproject` in Xcode and run standard configuration
+- Or use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile) for Android Studio
 
 
 ## Note
