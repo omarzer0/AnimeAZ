@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS animeEntity(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     image TEXT NOT NULL,
-    airingStatus INTEGER AS Boolean CHECK (airingStatus IN (0, 1)) DEFAULT 0 NOT NULL,
+    airingStatus INTEGER CHECK (airingStatus IN (0, 1)) DEFAULT 0 NOT NULL,
     numberOfEpisodes INTEGER NOT NULL,
     showType TEXT NOT NULL,
     dateOfInsertion INTEGER NOT NULL

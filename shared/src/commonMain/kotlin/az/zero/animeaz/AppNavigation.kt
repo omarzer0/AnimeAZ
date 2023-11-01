@@ -14,9 +14,9 @@ import com.arkivanov.essenty.parcelable.Parcelize
 
 @Parcelize
 sealed class ScreenDestination : Parcelable {
-    object HomeScreenDestination : ScreenDestination()
-    object SearchScreenDestination : ScreenDestination()
-    object FavoriteScreenDestination : ScreenDestination()
+    data object HomeScreenDestination : ScreenDestination()
+    data object SearchScreenDestination : ScreenDestination()
+    data object FavoriteScreenDestination : ScreenDestination()
     data class DetailsScreenDestination(val anime: Anime) : ScreenDestination()
 //    object AuthDestination : ScreenDestination()
 }

@@ -8,13 +8,13 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
     <th>
     Android
    </th>
-  
+
   <th>
        IOS (I'm limited only to 10mb video)
    </th>
-  
+
  </tr>
-  
+
   <tr>
     <td> 
       <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/441e1dc5-10d8-40ab-9c6b-a7b8a34d6302"/>
@@ -22,9 +22,34 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
     <td> 
       <video src ="https://github.com/omarzer0/AnimeAZ/assets/55766997/76438784-8d69-4bc0-b99f-61aa14fea93a" />
     </td>
-    
+
   </tr>
 </table>
+
+# How to run
+
+### Before running!
+- check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
+- install JDK 17 on your machine
+- add `local.properties` file to the project root and set a path to Android SDK there
+
+### Android
+To run the application on android device/emulator:
+- open project in Android Studio and run imported android run configuration
+
+To build the application bundle:
+- run `./gradlew :shared:assembleDebug`
+- find `.apk` file in `shared/build/outputs/apk/debug/shared-debug.apk`
+
+### Desktop
+Run the desktop application: `./gradlew :shared:run`
+
+### iOS
+To run the application on iPhone device/simulator:
+- Open `iosApp/iosApp.xcproject` in Xcode and run standard configuration
+- Or use [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile) for Android Studio
+
+
 
 ## Stack & Open-source libraries
 - 🎉🎉 Single codebase for both Android and IOS, and YES even Shared UI 🎉🎉 and should also work across all platforms.
@@ -65,8 +90,3 @@ Kotlin Multiplatform project with SharedUI and Shared Logic.
 - The idea of this app is to use as many features as possible to explore the power of KMP (The app doesn't have to make sense 😊) so feel free to add or request any feature you like.
 - The IOS still alpha currently (11/10/2023) so it is a bit laggy even with release.
 - Can't record the Biometric Auth screen.
-
-
-
-
-

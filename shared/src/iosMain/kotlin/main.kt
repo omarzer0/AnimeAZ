@@ -1,6 +1,5 @@
-package az.zero.animeaz
-
 import androidx.compose.ui.window.ComposeUIViewController
+import az.zero.animeaz.App
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import platform.UIKit.UIScreen

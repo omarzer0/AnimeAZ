@@ -1,4 +1,4 @@
-package az.zero.animeaz.android
+package az.zero.animeaz
 
 import android.app.Application
 import az.zero.animeaz.di.PlatformModule

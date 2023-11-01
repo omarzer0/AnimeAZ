@@ -65,7 +65,7 @@ class AnimeRepositoryImpl(
                             id = anime.id,
                             name = anime.name,
                             image = imageBitmap,
-                            airingStatus = anime.airingStatus,
+                            airingStatus = anime.airingStatus == 1.toLong(),
                             numberOfEpisodes = anime.numberOfEpisodes,
                             showType = anime.showType,
                             dateOfInsertion = anime.dateOfInsertion

@@ -1,0 +1,104 @@
+[versions]
+
+kotlin = "1.9.10"
+agp = "8.1.2"
+compose = "1.5.1"
+androidx-appcompat = "1.6.1"
+androidx-activityCompose = "1.7.2"
+compose-uitooling = "1.5.1"
+composeImageLoader = "1.6.7"
+napier = "2.6.1"
+kotlinx-coroutines = "1.7.3"
+moko-mvvm = "0.16.1"
+ktor = "2.3.3"
+ktor-client-cio = "2.3.1"
+ktor-serialization = "2.3.2"
+composeIcons = "1.1.0"
+kotlinx-serialization = "1.6.0"
+kotlinx-datetime = "0.4.1"
+multiplatformSettings = "1.0.0"
+koin = "3.5.0"
+sqlDelight = "2.0.0"
+moko-resources-generator = "0.23.0"
+router = "0.3.0"
+decompose = "2.1.0-compose-experimental-alpha-05"
+essenty-parcelable = "1.1.0"
+pullRefresh = "1.0.1"
+essenty = "1.1.0"
+
+[libraries]
+
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
+
+# Coroutines
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+# Napier logger
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+
+# Moko
+moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm" }
+moko-flow = { module = "dev.icerock.moko:mvvm-flow-compose", version.ref = "moko-mvvm" }
+moko-resources = { module = "dev.icerock.moko:resources-compose", version.ref = "moko-resources-generator" }
+
+# Ktor
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-client-cio" }
+
+#ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-jsonSerialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-serialization" }
+
+# SqlDelight
+sqlDelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
+sqlDelight-extentions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqlDelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+sqlDelight-driver-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
+
+# Decompose + Router
+router = { module = "io.github.xxfast:decompose-router", version.ref = "router" }
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-jetbrains = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
+essenty = { module = "com.arkivanov.essenty:parcelable", version.ref = "essenty" }
+
+# pull to refresh
+pullToRefresh = { module = "dev.materii.pullrefresh:pullrefresh", version.ref = "pullRefresh" }
+
+# Koin
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+
+# Feather Icons
+composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "composeIcons" }
+
+# Kotlin date-time
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# KMP Settings
+multiplatformSettings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
+
+# ImageLoader
+composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
+
+
+## Kotlin serialization
+#kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+[plugins]
+
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+#sqlDelight-plugin = { id = "app.cash.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
+
+moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko-resources-generator" }
+moko-resources-generator = { id = "dev.icerock.moko:resources-generator", version.ref = "moko-resources-generator" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
