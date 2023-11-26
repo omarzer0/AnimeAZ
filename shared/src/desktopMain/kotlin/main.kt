@@ -8,6 +8,7 @@ import az.zero.animeaz.di.sharedModule
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.koin.core.context.startKoin
+import java.awt.Dimension
 
 
 fun main() {
@@ -27,6 +28,7 @@ fun main() {
             state = windowState,
             onCloseRequest = { exitApplication() }
         ) {
+            window.minimumSize = Dimension(350, 550)
             MainView(rootComponentContext = rootComponentContext)
         }
 
