@@ -1,53 +1,28 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
-    id("kotlinx-serialization")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.moko.resources)
     id("kotlin-parcelize")
-
-    id("com.squareup.sqldelight")
-    id("dev.icerock.mobile.multiplatform-resources")
 }
 
-val nameSpace = "az.zero.animeaz"
-
-android {
-    namespace = nameSpace
-    compileSdk = 34
-    defaultConfig {
-        minSdk = 25
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-val coroutinesVersion = "1.7.3"
-val ktorVersion = "2.3.3"
-val sqlDelightVersion = "1.5.5"
-val dateTimeVersion = "0.4.0"
-val serializationVersion = "2.3.2"
-val koinVersion = "3.4.2"
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     targetHierarchy.default()
-
-    jvm("desktop")
-
-    android {
+    androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "17"
-                allWarningsAsErrors = false
-                // To ignore ExperimentalMaterial3Api error
-                freeCompilerArgs += listOf(
-                    "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-                )
             }
         }
     }
+
+    jvm("desktop")
 
     listOf(
         iosX64(),
@@ -56,71 +31,98 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
-            export("dev.icerock.moko:resources:0.23.0")
-            export("dev.icerock.moko:graphics:0.9.0")
+            export(libs.moko.resources)
         }
     }
 
-
     sourceSets {
+        all {
+            languageSettings {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
         val commonMain by getting {
             dependencies {
-
                 implementation(compose.runtime)
-                implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
                 // SqlDelight
-                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                implementation(libs.sqlDelight.runtime)
+                implementation(libs.sqlDelight.extentions.coroutines)
 
                 // Coroutines
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                implementation(libs.kotlinx.coroutines.core)
 
                 // Ktor
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$serializationVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation(libs.ktor.core)
+                implementation(libs.ktor.contentNegotiation)
+                implementation(libs.ktor.jsonSerialization)
+                implementation(libs.ktor.logging)
 
                 // Koin
-                implementation("io.insert-koin:koin-core:${koinVersion}")
+                implementation(libs.koin.core)
 
                 // Image Loading
-                api("io.github.qdsfdhvh:image-loader:1.6.4")
+                implementation(libs.composeImageLoader)
 
                 // Decompose + Router
-                implementation("io.github.xxfast:decompose-router:0.3.0")
-                implementation("com.arkivanov.decompose:decompose:2.1.0-compose-experimental-alpha-05")
-                implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.1.0-compose-experimental-alpha-05")
-                implementation("com.arkivanov.essenty:parcelable:1.1.0")
+                implementation(libs.decompose.jetbrains)
+                implementation(libs.decompose)
+                implementation(libs.router)
+                implementation(libs.essenty)
 
-                // Kotlin date-time
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+                // kotlinx datetime
+                implementation(libs.kotlinx.datetime)
 
-                // My Paging library
+                // KMP Settings
+                implementation(libs.multiplatformSettings)
+
+                // Pull to refresh
+                implementation(libs.pullToRefresh)
+
+                // Feather Icons
+                implementation(libs.composeIcons.featherIcons)
+
                 implementation(project(":paging"))
-
-                // KMP preferences
-                implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
-
-                // Swipe to refresh
-                implementation("dev.materii.pullrefresh:pullrefresh:1.0.1")
 
             }
         }
 
         val androidMain by getting {
+            dependsOn(commonMain)
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
-                implementation("androidx.appcompat:appcompat:1.6.1")
-                implementation("androidx.activity:activity-compose:1.7.2")
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activityCompose)
+                implementation(libs.koin.android)
+
+                implementation(libs.ktor.client.android)
+                implementation(libs.sqlDelight.driver.android)
             }
         }
+
+        val desktopMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(compose.desktop.common)
+                implementation(compose.desktop.currentOs)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.sqlDelight.driver.jvm)
+            }
+        }
+
+        val iosMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+//                implementation(compose.desktop.common)
+
+                implementation(libs.ktor.client.darwin)
+                implementation(libs.sqlDelight.driver.native)
+            }
+        }
+
 
         val commonTest by getting {
             dependencies {
@@ -143,39 +145,58 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
 
-        val iosMain by getting {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
-            }
-        }
-
-        val desktopMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(compose.desktop.common)
-                implementation("io.ktor:ktor-client-cio:2.3.1")
-                implementation("com.squareup.sqldelight:sqlite-driver:1.5.4")
-            }
-        }
 
     }
 }
 
-dependencies {
-    commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
-    commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
-    commonMainApi("dev.icerock.moko:resources-compose:0.23.0")
-//    commonMainApi("dev.icerock.moko:biometry-compose:0.4.0")
+val nameSpace = "az.zero.animeaz"
+
+dependencies{
+    commonMainApi(libs.moko.mvvm)
+    commonMainApi(libs.moko.flow)
+    commonMainApi(libs.moko.resources)
+}
+
+android {
+    namespace = nameSpace
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 24
+        targetSdk = 34
+
+        applicationId = "$nameSpace.androidApp"
+        versionCode = 1
+        versionName = "1.0.0"
+    }
+    sourceSets["main"].apply {
+        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        res.srcDirs("src/androidMain/resources")
+        resources.srcDirs("src/commonMain/resources")
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "nameSpace.desktopApp"
+            packageVersion = "1.0.0"
+        }
+    }
 }
 
 sqldelight {
-    database("AppDatabase") {
-        packageName = "$nameSpace.database"
+    databases {
+        create("AppDatabase") {
+            packageName.set("$nameSpace.database")
+        }
     }
 }
 

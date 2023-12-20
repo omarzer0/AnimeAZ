@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package az.zero.animeaz.data.local.file_storage
 
 import androidx.compose.ui.graphics.ImageBitmap
 import com.seiko.imageloader.asImageBitmap
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.refTo

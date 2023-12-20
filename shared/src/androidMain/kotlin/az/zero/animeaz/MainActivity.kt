@@ -1,4 +1,4 @@
-package az.zero.animeaz.android
+package az.zero.animeaz
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

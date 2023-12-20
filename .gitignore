@@ -10,3 +10,6 @@ local.properties
 xcuserdata
 desktopApp/cachedImages
 desktopApp/AppDatabase.db
+
+shared/AppDatabase.db
+shared/src/desktopMain/cachedImages

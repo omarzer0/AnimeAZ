@@ -9,10 +9,11 @@ import java.io.File
 actual class ImageStorageHandler {
 
     private val rootFilePath = System.getProperty("user.dir")
-    private val imageDir = "/cachedImages"
+    private val imageDir = "/src/desktopMain/cachedImages"
     private val path = rootFilePath.plus(imageDir)
 
     private fun getImagePathById(id: Long): String {
+        createDirIfNotExist()
         return "${path}/image_saved_$id.jpg"
     }
 
@@ -32,5 +33,10 @@ actual class ImageStorageHandler {
     actual suspend fun deleteImage(id: Long): Boolean {
         val filePath = getImagePathById(id)
         return File(filePath).delete()
+    }
+
+    private fun createDirIfNotExist(){
+        val file = File(path)
+        if (!file.exists()) file.mkdir()
     }
 }

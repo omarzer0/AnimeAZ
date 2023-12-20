@@ -1,7 +1,7 @@
 package az.zero.animeaz.data.local.database
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 
 actual class DBDriverFactory {
     actual fun create(): SqlDriver {

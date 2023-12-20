@@ -1,12 +1,14 @@
 package az.zero.animeaz.data.local.database
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import az.zero.animeaz.data.util.DateTimeUtil
 import az.zero.animeaz.database.AppDatabase
 import az.zero.animeaz.domain.database.AnimeDatabaseSource
 import az.zero.animeaz.domain.model.Anime
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
 import database.AnimeEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,7 +20,7 @@ class AnimeDatabaseSourceImpl(
 
     override fun getAllFavouriteAnimeList(): Flow<List<AnimeEntity>> {
         return queries.getAllAnimes().asFlow()
-            .mapToList()
+            .mapToList(Dispatchers.IO)
     }
 
     override suspend fun insertAnime(anime: Anime) {
@@ -26,7 +28,7 @@ class AnimeDatabaseSourceImpl(
             id = anime.id,
             name = anime.name,
             image = anime.image,
-            airingStatus = anime.airingStatus,
+            airingStatus = if (anime.airingStatus) 1 else 0,
             numberOfEpisodes = anime.numberOfEpisodes,
             showType = anime.showType,
             dateOfInsertion = dateTimeUtil.now()
