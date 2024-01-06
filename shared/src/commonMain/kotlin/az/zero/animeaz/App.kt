@@ -1,5 +1,6 @@
 package az.zero.animeaz
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -25,16 +26,16 @@ import io.github.xxfast.decompose.router.rememberRouter
 
 @Composable
 fun App(
-    darkTheme: Boolean,
     dynamicColor: Boolean,
     rootComponentContext: DefaultComponentContext
 ) {
+
     CompositionLocalProvider(
         LocalComponentContext provides rootComponentContext,
         LocalLayoutDirection provides LayoutDirection.Ltr
     ) {
         AppTheme(
-            darkTheme = darkTheme,
+            darkTheme = isSystemInDarkTheme(),
             dynamicColor = dynamicColor
         ) {
             Surface {

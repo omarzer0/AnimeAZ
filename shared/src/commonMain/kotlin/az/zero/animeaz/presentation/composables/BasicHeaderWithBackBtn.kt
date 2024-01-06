@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package az.zero.animeaz.presentation.shared
+package az.zero.animeaz.presentation.composables
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import az.zero.animeaz.SharedRes
-import az.zero.animeaz.presentation.string_util.StringHelper
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun BasicHeaderWithBackBtn(
@@ -44,7 +44,7 @@ fun BasicHeaderWithBackBtn(
                 Icon(
                     modifier = Modifier.mirror(),
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = StringHelper.getStringRes(SharedRes.strings.back),
+                    contentDescription = stringResource(SharedRes.strings.back),
                     tint = backButtonTint,
                 )
             }

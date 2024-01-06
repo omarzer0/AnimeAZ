@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package az.zero.animeaz.presentation.screens.search
 
 import androidx.compose.foundation.background
@@ -14,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,18 +23,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
-import az.zero.animeaz.core.PlatformName.*
+import az.zero.animeaz.core.PlatformName.ANDROID
+import az.zero.animeaz.core.PlatformName.DESKTOP
+import az.zero.animeaz.core.PlatformName.IOS
 import az.zero.animeaz.core.getPlatformName
 import az.zero.animeaz.domain.model.Anime
-import az.zero.animeaz.presentation.shared.AnimeItem
-import az.zero.animeaz.presentation.shared.AppDivider
-import az.zero.animeaz.presentation.shared.BasicHeaderWithBackBtn
-import az.zero.animeaz.presentation.shared.ErrorWithRetry
-import az.zero.animeaz.presentation.shared.LoadingComposable
-import az.zero.animeaz.presentation.shared.PagingListener
-import az.zero.animeaz.presentation.shared.TextWithClearIcon
-import az.zero.animeaz.presentation.shared.getSpanAdaptive
-import az.zero.animeaz.presentation.string_util.StringHelper
+import az.zero.animeaz.presentation.composables.AnimeItem
+import az.zero.animeaz.presentation.composables.AppDivider
+import az.zero.animeaz.presentation.composables.BasicHeaderWithBackBtn
+import az.zero.animeaz.presentation.composables.ErrorWithRetry
+import az.zero.animeaz.presentation.composables.LoadingComposable
+import az.zero.animeaz.presentation.composables.PagingListener
+import az.zero.animeaz.presentation.composables.TextWithClearIcon
+import az.zero.animeaz.presentation.composables.getSpanAdaptive
+import dev.icerock.moko.resources.compose.stringResource
 import io.github.xxfast.decompose.router.rememberOnRoute
 
 @Composable
@@ -77,7 +76,7 @@ fun SearchScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = StringHelper.getStringRes(id = SharedRes.strings.network_error),
+                        text = stringResource(SharedRes.strings.network_error),
                     )
                 }
             }
@@ -92,10 +91,11 @@ fun SearchScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = StringHelper.getStringRes(id = SharedRes.strings.no_result),
+                        text = stringResource(SharedRes.strings.no_result),
                     )
                 }
             }
+
             else -> {
                 LazyVerticalGrid(
                     modifier = Modifier.padding(it),
@@ -120,10 +120,10 @@ fun SearchScreen(
                     searchScreenState.loadingMoreError?.let {
                         item(span = { getSpanAdaptive() }) {
                             ErrorWithRetry(
-                                errorBodyText = StringHelper.getStringRes(
+                                errorBodyText = stringResource(
                                     SharedRes.strings.home_load_more_error
                                 ),
-                                retryButtonText = StringHelper.getStringRes(
+                                retryButtonText = stringResource(
                                     SharedRes.strings.retry_btn_text
                                 ),
                                 onRetryClick = viewModel::loadMore
@@ -154,7 +154,7 @@ fun SearchHeader(
                 TextWithClearIcon(
                     modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     text = text,
-                    hint = StringHelper.getStringRes(SharedRes.strings.search),
+                    hint = stringResource(SharedRes.strings.search),
                     onClearClick = onClearClick,
                     onTextValueChanged = onTextValueChanged
                 )

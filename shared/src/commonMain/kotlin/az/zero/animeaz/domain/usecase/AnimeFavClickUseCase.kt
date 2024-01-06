@@ -1,4 +1,4 @@
-package az.zero.animeaz.data.usecase
+package az.zero.animeaz.domain.usecase
 
 import az.zero.animeaz.data.local.file_storage.ImageStorageHandler
 import az.zero.animeaz.domain.model.Anime

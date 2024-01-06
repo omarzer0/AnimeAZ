@@ -2,10 +2,8 @@ package az.zero.animeaz
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.fragment.app.FragmentActivity
-import az.zero.animeaz.App
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.defaultComponentContext
 import io.github.xxfast.decompose.LocalComponentContext
@@ -17,7 +15,6 @@ class MainActivity : FragmentActivity() {
         setContent {
             CompositionLocalProvider(LocalComponentContext provides rootComponentContext) {
                 App(
-                    darkTheme = isSystemInDarkTheme(),
                     dynamicColor = false,
                     rootComponentContext = rootComponentContext
                 )
