@@ -1,4 +1,4 @@
-package az.zero.animeaz.presentation.shared
+package az.zero.animeaz.presentation.composables
 
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable

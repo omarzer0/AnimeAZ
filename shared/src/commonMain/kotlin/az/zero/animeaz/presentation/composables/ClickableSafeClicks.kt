@@ -1,4 +1,4 @@
-package az.zero.animeaz.presentation.shared
+package az.zero.animeaz.presentation.composables
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalIndication

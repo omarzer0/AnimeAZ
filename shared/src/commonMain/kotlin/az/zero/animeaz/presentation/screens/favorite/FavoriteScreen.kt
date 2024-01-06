@@ -44,7 +44,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
 import az.zero.animeaz.domain.model.FavAnime
-import az.zero.animeaz.presentation.string_util.StringHelper
+import dev.icerock.moko.resources.compose.stringResource
 import io.github.xxfast.decompose.router.rememberOnRoute
 
 @Composable
@@ -60,7 +60,7 @@ fun FavoriteScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             FavoriteTopBar(
-                title = StringHelper.getStringRes(SharedRes.strings.favorite),
+                title = stringResource(SharedRes.strings.favorite),
                 onBackClick = onBackClick
             )
         }
@@ -72,7 +72,7 @@ fun FavoriteScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = StringHelper.getStringRes(id = SharedRes.strings.your_fav_anime_list_is_empty),
+                    text = stringResource(SharedRes.strings.your_fav_anime_list_is_empty),
                 )
             }
         }else{
@@ -96,7 +96,7 @@ fun FavAnimeItem(
 ) {
 
     val showStatus =
-        StringHelper.getStringRes(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
+        stringResource(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
 
     Card(
         modifier = modifier
@@ -147,7 +147,7 @@ fun FavAnimeItem(
                             Icon(
                                 modifier = Modifier.size(28.dp),
                                 imageVector = Icons.Filled.Favorite,
-                                contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                                contentDescription = stringResource(SharedRes.strings.favorite),
                                 tint = Color.Red
                             )
                         }
@@ -193,7 +193,7 @@ fun FavoriteTopBar(
                     Icon(
                         modifier = Modifier.size(28.dp),
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.back),
+                        contentDescription = stringResource(SharedRes.strings.back),
                     )
                 }
             )

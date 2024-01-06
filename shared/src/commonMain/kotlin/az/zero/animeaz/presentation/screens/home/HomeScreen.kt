@@ -49,14 +49,14 @@ import az.zero.animeaz.SharedRes
 import az.zero.animeaz.core.PlatformName
 import az.zero.animeaz.core.getPlatformName
 import az.zero.animeaz.domain.model.Anime
-import az.zero.animeaz.presentation.shared.AnimeItem
-import az.zero.animeaz.presentation.shared.AppDivider
-import az.zero.animeaz.presentation.shared.ErrorWithRetry
-import az.zero.animeaz.presentation.shared.LoadingComposable
-import az.zero.animeaz.presentation.shared.PagingListener
-import az.zero.animeaz.presentation.shared.ScrollWrapper
-import az.zero.animeaz.presentation.shared.getSpanAdaptive
-import az.zero.animeaz.presentation.string_util.StringHelper
+import az.zero.animeaz.presentation.composables.AnimeItem
+import az.zero.animeaz.presentation.composables.AppDivider
+import az.zero.animeaz.presentation.composables.ErrorWithRetry
+import az.zero.animeaz.presentation.composables.LoadingComposable
+import az.zero.animeaz.presentation.composables.PagingListener
+import az.zero.animeaz.presentation.composables.ScrollWrapper
+import az.zero.animeaz.presentation.composables.getSpanAdaptive
+import dev.icerock.moko.resources.compose.stringResource
 import dev.materii.pullrefresh.rememberPullRefreshState
 import io.github.xxfast.decompose.router.rememberOnRoute
 import kotlinx.coroutines.launch
@@ -127,7 +127,7 @@ fun HomeScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = StringHelper.getStringRes(id = SharedRes.strings.network_error),
+                                text = stringResource(SharedRes.strings.network_error),
                             )
                         }
                     }
@@ -162,10 +162,10 @@ fun HomeScreen(
                             homeScreenState.loadingMoreError?.let {
                                 item(span = { getSpanAdaptive() }) {
                                     ErrorWithRetry(
-                                        errorBodyText = StringHelper.getStringRes(
+                                        errorBodyText = stringResource(
                                             SharedRes.strings.home_load_more_error
                                         ),
-                                        retryButtonText = StringHelper.getStringRes(
+                                        retryButtonText = stringResource(
                                             SharedRes.strings.retry_btn_text
                                         ),
                                         onRetryClick = viewModel::loadMore
@@ -198,7 +198,7 @@ fun HomeModalSheetContent(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = StringHelper.getStringRes(SharedRes.strings.loginHeaderPlaceHolder),
+                text = stringResource(SharedRes.strings.loginHeaderPlaceHolder),
                 style = MaterialTheme.typography.titleLarge
             )
         }
@@ -207,7 +207,7 @@ fun HomeModalSheetContent(
 
         TextSwitch(
             modifier = Modifier.padding(16.dp),
-            name = StringHelper.getStringRes(SharedRes.strings.lock_with_biometry),
+            name = stringResource(SharedRes.strings.lock_with_biometry),
             change = useBioAuth,
             onCheckedChange = onUseBioAuthClick
         )
@@ -256,7 +256,7 @@ fun HomeTopAppBar(
         modifier = modifier,
         title = {
             Text(
-                text = StringHelper.getStringRes(SharedRes.strings.appName),
+                text = stringResource(SharedRes.strings.appName),
                 fontWeight = FontWeight.Bold,
             )
         },
@@ -267,7 +267,7 @@ fun HomeTopAppBar(
                     Icon(
                         modifier = Modifier.size(28.dp),
                         imageVector = Icons.Filled.Menu,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.drawer),
+                        contentDescription = stringResource(SharedRes.strings.drawer),
                     )
                 }
             )
@@ -279,7 +279,7 @@ fun HomeTopAppBar(
                     Icon(
                         modifier = Modifier.size(28.dp),
                         imageVector = Icons.Outlined.FavoriteBorder,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                        contentDescription = stringResource(SharedRes.strings.favorite),
                     )
                 }
             )
@@ -290,7 +290,7 @@ fun HomeTopAppBar(
                     Icon(
                         modifier = Modifier.size(28.dp),
                         imageVector = Icons.Filled.Search,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.search),
+                        contentDescription = stringResource(SharedRes.strings.search),
                     )
                 }
             )

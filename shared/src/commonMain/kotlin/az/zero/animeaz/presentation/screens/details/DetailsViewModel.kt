@@ -1,7 +1,7 @@
 package az.zero.animeaz.presentation.screens.details
 
 import az.zero.animeaz.core.BaseViewModel
-import az.zero.animeaz.data.usecase.AnimeFavClickUseCase
+import az.zero.animeaz.domain.usecase.AnimeFavClickUseCase
 import az.zero.animeaz.domain.model.Anime
 import az.zero.animeaz.domain.repository.AnimeRepository
 import io.github.xxfast.decompose.router.SavedStateHandle

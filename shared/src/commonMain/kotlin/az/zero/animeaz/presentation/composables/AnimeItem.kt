@@ -1,4 +1,4 @@
-package az.zero.animeaz.presentation.shared
+package az.zero.animeaz.presentation.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -28,8 +28,8 @@ import az.zero.animeaz.core.PlatformName.DESKTOP
 import az.zero.animeaz.core.PlatformName.IOS
 import az.zero.animeaz.core.getPlatformName
 import az.zero.animeaz.domain.model.Anime
-import az.zero.animeaz.presentation.string_util.StringHelper
 import az.zero.animeaz.presentation.theme.CustomColors.DarkOrange
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun AnimeItem(
@@ -50,7 +50,7 @@ fun AnimeItem(
         }
 
         val image = rememberDefaultPainter(url = url)
-        val animeShowState = StringHelper.getStringRes(
+        val animeShowState = stringResource(
             if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished
         )
 
@@ -60,7 +60,7 @@ fun AnimeItem(
                 .clip(RoundedCornerShape(8.dp)),
             painter = image,
             contentScale = ContentScale.Crop,
-            contentDescription = StringHelper.getStringRes(SharedRes.strings.animeImage)
+            contentDescription = stringResource(SharedRes.strings.animeImage)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -82,7 +82,7 @@ fun AnimeItem(
             Icon(
                 modifier = Modifier.size(14.dp),
                 imageVector = Icons.Filled.Star,
-                contentDescription = StringHelper.getStringRes(SharedRes.strings.ratingStar),
+                contentDescription = stringResource(SharedRes.strings.ratingStar),
                 tint = DarkOrange
             )
 

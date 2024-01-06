@@ -1,4 +1,4 @@
-package az.zero.animeaz.presentation.shared
+package az.zero.animeaz.presentation.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -33,7 +33,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import az.zero.animeaz.SharedRes
-import az.zero.animeaz.presentation.string_util.StringHelper
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun TextWithClearIcon(
@@ -102,7 +102,7 @@ fun TextWithClearIcon(
                     Icon(
                         imageVector = Icons.Filled.Clear,
                         tint = MaterialTheme.colorScheme.onBackground,
-                        contentDescription =  StringHelper.getStringRes(SharedRes.strings.clear)
+                        contentDescription =  stringResource(SharedRes.strings.clear)
                     )
                 }
             }

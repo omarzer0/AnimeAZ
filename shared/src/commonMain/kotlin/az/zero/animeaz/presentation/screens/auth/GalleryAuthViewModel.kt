@@ -36,9 +36,9 @@
 //        viewModelScope.launch {
 //            try {
 //                val isSuccess = biometryAuthenticator.checkBiometryAuthentication(
-//                    requestTitle = StringHelper.getStringRes(SharedRes.strings.bio_request_title).desc(),
-//                    requestReason =  StringHelper.getStringRes(SharedRes.strings.bio_request_reason).desc(),
-//                    failureButtonText =  StringHelper.getStringRes(SharedRes.strings.bio_failure_button_text).desc(),
+//                    requestTitle = stringResource(SharedRes.strings.bio_request_title).desc(),
+//                    requestReason =  stringResource(SharedRes.strings.bio_request_reason).desc(),
+//                    failureButtonText =  stringResource(SharedRes.strings.bio_failure_button_text).desc(),
 //                    allowDeviceCredentials = true // true - if biometric permission is not granted user can authorise by device creds
 //                )
 //

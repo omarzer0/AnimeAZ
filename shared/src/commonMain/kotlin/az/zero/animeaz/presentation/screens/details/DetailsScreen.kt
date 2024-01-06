@@ -60,10 +60,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.zero.animeaz.SharedRes
 import az.zero.animeaz.domain.model.Anime
-import az.zero.animeaz.presentation.shared.mirror
-import az.zero.animeaz.presentation.shared.rememberDefaultPainter
-import az.zero.animeaz.presentation.string_util.StringHelper
+import az.zero.animeaz.presentation.composables.mirror
+import az.zero.animeaz.presentation.composables.rememberDefaultPainter
 import az.zero.animeaz.presentation.theme.CustomColors
+import dev.icerock.moko.resources.compose.stringResource
 import io.github.xxfast.decompose.router.rememberOnRoute
 
 @Composable
@@ -92,7 +92,7 @@ fun DetailsScreen(
         append("/10")
     }
     val showStatus =
-        StringHelper.getStringRes(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
+        stringResource(if (anime.airingStatus) SharedRes.strings.onAir else SharedRes.strings.finished)
 
 
     Scaffold(
@@ -204,13 +204,13 @@ fun DetailsScreen(
 
                     DetailsIconHeader(
                         icon = Icons.Default.Tag,
-                        header =  StringHelper.getStringRes(SharedRes.strings.rank),
+                        header =  stringResource(SharedRes.strings.rank),
                         body = anime.rank.toString(),
                     )
 
                     DetailsIconHeader(
                         icon = Icons.Filled.Star,
-                        header =  StringHelper.getStringRes(SharedRes.strings.popularity),
+                        header =  stringResource(SharedRes.strings.popularity),
                         body = anime.popularity.toString(),
                     )
 
@@ -278,7 +278,7 @@ fun DetailsTopBar(
                     Icon(
                         modifier = Modifier.size(28.dp),
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.back),
+                        contentDescription = stringResource(SharedRes.strings.back),
                     )
                 }
             )
@@ -290,7 +290,7 @@ fun DetailsTopBar(
                     Icon(
                         modifier = Modifier.size(28.dp),
                         imageVector = if (isFav) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                        contentDescription = StringHelper.getStringRes(SharedRes.strings.favorite),
+                        contentDescription = stringResource(SharedRes.strings.favorite),
                         tint = if (isFav) Color.Red else MaterialTheme.colorScheme.onPrimary
                     )
                 }
